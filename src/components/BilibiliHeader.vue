@@ -1,7 +1,7 @@
 <template>
   <header>
-    <div class="header" style="background-image: url(http://i0.hdslb.com/bfs/archive/7194f83fcb011b609f354e27d7188c29586df444.png)">
-      <div class="bgFlur" style="background-image: url(http://i0.hdslb.com/bfs/archive/7194f83fcb011b609f354e27d7188c29586df444.png)">
+    <div class="header" style="background-image: url(http://localhost:3000/image/header.png)">
+      <div class="bgFlur" style="background-image: url(http://localhost:3000/image/header.png)">
       </div>
       <div class="barContainer">
         <div class="bar">
@@ -27,31 +27,62 @@
             <ul>
               <li  @mouseover="avatarBigger" @mouseleave="avatarSmaller">
                 <div class="detail" ref="userDetail">
-                  <div class="username">bilibili</div>
+                  <div class="username">BILIBILI</div>
                   <div class="up">
-                    <div class="left">硬币 666 B币 666 </div>
-                    <div class="right">邮箱 手机</div>
+                    <div class="left">
+                      <a href="https://account.bilibili.com/site/home" title="硬币" target="_blank">
+                        <span class="coin_icon">
+                        </span>
+                        <span class="coin_text text">
+                          666
+                        </span>
+                      </a>
+                      <a href="https://account.bilibili.com/site/home" title="B币" target="_blank">
+                        <span class="bcoin_icon">
+
+                        </span>
+                        <span class="bcoin_text text">
+                          666
+                        </span>
+                      </a>
+                    </div>
+                    <div class="right">
+                      <a href="https://account.bilibili.com/" class="mail" target="_blank" title="邮箱" data-attr="已绑定"></a>
+                      <a href="https://account.bilibili.com/" class="mobile" target="_blank" title="手机" data-attr="已绑定"></a>
+                    </div>
+                  </div>
+                  <div class="lever">
+                    <span class="lever_text">等级</span>
+                    <span class="lever_num">
+                      <span class="bar_back">
+                        <span class="lever_front"></span>
+                        <span class="lerver_detail">14400/<span class=" lerver_detail_sum">28800</span></span>
+                      </span>
+                    </span>
                   </div>
                   <div class="down">
                     <ul>
-                      <li>个人中心</li>
-                      <li>投稿管理</li>
-                      <li>B币钱包</li>
-                      <li>直播中心</li>
-                      <li>会员购订单</li>
+                      <li><a href="">个人中心</a></li>
+                      <li><a href="">投稿管理</a></li>
+                      <li><a href="">B币钱包</a></li>
+                      <li><a href="">直播中心</a></li>
+                      <li><a href="">会员购订单</a></li>
                     </ul>
+                  </div>
+                  <div class="exit">
+                    <a href="">退出</a>
                   </div>
                 </div>
                 <a>
                   <div class="avatar"ref="avatar"></div>
                 </a>
               </li>
-              <li><a title="消息">消息</a></li>
-              <li><a title="动态">动态</a></li>
-              <li><a title="稍后再看">稍后再看</a></li>
-              <li><a title="收藏夹">收藏夹</a></li>
-              <li><a title="历史">历史</a></li>
-              <li><a title="投稿">投稿</a></li>
+              <li><a href="" title="消息">消息</a></li>
+              <li><a href="" title="动态">动态</a></li>
+              <li><a href="" title="稍后再看">稍后再看</a></li>
+              <li><a href="" title="收藏夹">收藏夹</a></li>
+              <li><a href="" title="历史">历史</a></li>
+              <li><a href="" title="投稿">投稿</a></li>
             </ul>
           </div>
         </div>
@@ -176,6 +207,9 @@
               font-size:12px;
               padding: 0 10px;
               position: relative;
+              a {
+                color: black;
+              }
               &:nth-child(1) {
                 width: 64px;
                 padding: 0;
@@ -193,7 +227,7 @@
               }
               div.detail {
                 width: 260px;
-                height: 280px;
+                height: 320px;
                 background-color: #ffffff;
                 position: absolute;
                 left: -100px;
@@ -212,7 +246,8 @@
                   font-size: 15px;
                 }
                 div.up {
-                  border-bottom: 1px solid #eeeeee;
+                  line-height: 100%;
+                  padding: 8px 0;
                   &:after{
                     content: '.';
                     clear: both;
@@ -223,20 +258,172 @@
                   }
                   div.left {
                     float: left;
+                    span{
+                      display: inline-block;
+                    }
+                    span.coin_icon {
+
+                      background-image: url(http://static.hdslb.com/images/base/icons.png);
+                      background-position: -343px -471px;
+                      width: 18px;
+                      height: 18px;
+                      vertical-align: top;
+                    }
+                    span.bcoin_icon {
+                      margin-left: 10px;
+                      background-image: url(http://static.hdslb.com/images/base/icons.png);
+                      background-position: -407px -471px;
+                      width: 18px;
+                      height: 18px;
+                      vertical-align: top;
+                    }
+                    span.text {
+                      line-height: 18px;
+                    }
                   }
                   div.right {
                     float: right;
+                    a {
+                      background-image: url(http://static.hdslb.com/images/base/icons.png);
+                      width: 18px;
+                      height: 18px;
+                      display: inline-block;
+                      position: relative;
+                      vertical-align: top;
+                      &.mail {
+                        background-position: -343px -534px;
+                        margin-right: 10px;
+                        &:after{
+                          position: absolute;
+                          content: attr(data-attr);
+                          font-size: 12px;
+                          left: -50px;
+                          top:0;
+                          border:1px solid #e8e8e8;
+                          padding: 2px 5px;
+                          border-radius: 5px;
+                          color: #000;
+                          opacity: 0;
+                          transition: opacity .2s;
+                          background-color: #ffffff;
+                          pointer-events: none;
+                        }
+                        &:hover:after {
+                          opacity: 1;
+                        }
+                      }
+                      &.mobile {
+                        background-position: -343px -599px;
+                        &:after{
+                          position: absolute;
+                          content: attr(data-attr);
+                          font-size: 12px;
+                          left: -55px;
+                          top:0;
+                          border:1px solid #e8e8e8;
+                          padding: 2px 5px;
+                          border-radius: 5px;
+                          color: #000;
+                          opacity: 0;
+                          background-color: #ffffff;
+                          transition: opacity .2s;
+                          pointer-events: none;
+                        }
+                        &:hover:after {
+                          opacity: 1;
+                        }
+                      }
+                    }
                   }
                 }
-                div.down li {
-                  width: 100px;
-                  padding: 0;
-                  text-align: center;
+                div.lever {
+                  border-bottom: 1px solid #eeeeee;
+                  vertical-align: top;
+                  line-height: 100%;
+                  padding: 20px 0 20px;
+                  span.lever_text {
+                    line-height:18px;
+                    vertical-align: top;
+                  }
+                  span.lever_num {
+                    vertical-align: top;
+                    display: inline-block;
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    background-color: #f3cb85;
+                    background-position: -153px -188px;
+                    position: relative;
+                    background-image: url(data:image/png;base64,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);
+
+                    span.bar_back {
+                      width: 154px;
+                      height: 7px;
+                      background-color: rgba(214, 214, 214, 0.33);
+                      position: absolute;
+                      left: 16px;
+                      top: 5px;
+
+                      span.lever_front {
+                        width: 50%;
+                        height: 7px;
+                        background-color: #f3cb85;
+                        position: absolute;
+                      }
+                      span.lerver_detail {
+                        position: absolute;
+                        font-size: 12px;
+                        top:8px;
+                        right: 0;
+
+                        span.lerver_detail_sum {
+                          color: rgba(214, 214, 214, 1)
+                        }
+                      }
+                    }
+                  }
+                }
+                div.down ul{
+                  padding-top: 10px;
+                  &:after{
+                    content: '.';
+                    clear: both;
+                    width: 0;
+                    height: 0;
+                    display: block;
+                    visibility: hidden;
+                  }
+                  li {
+                    width: 100px;
+                    padding: 0;
+                    text-align: center;
+                    line-height: 30px;
+                    a {
+                      color: #000;
+                      &:hover {
+                        color: #66ccff;
+                      }
+                    }
+                  }
                 }
               }
             }
             &:hover {
               cursor: pointer;
+            }
+            div.exit {
+              position: absolute;
+              bottom:0;
+              width: 100%;
+              background-color: #F4F5F7;
+              text-align: right;
+              left: 0;
+              padding: 0 20px;
+              line-height: 35px;
+              box-sizing: border-box;
+              a:hover {
+                color: #66ccff;
+              }
             }
           }
         }
