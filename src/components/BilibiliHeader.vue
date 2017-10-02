@@ -25,7 +25,7 @@
           </div>
           <div class="user">
             <ul>
-              <li  @mouseover="avatarBigger" @mouseleave="avatarSmaller">
+              <li class="user" @mouseover="avatarBigger" @mouseleave="avatarSmaller">
                 <div class="detail" ref="userDetail">
                   <div class="username">BILIBILI</div>
                   <div class="up">
@@ -77,16 +77,55 @@
                   <div class="avatar"ref="avatar"></div>
                 </a>
               </li>
-              <li><a href="" title="消息">消息</a></li>
-              <li><a href="" title="动态">动态</a></li>
-              <li><a href="" title="稍后再看">稍后再看</a></li>
-              <li><a href="" title="收藏夹">收藏夹</a></li>
-              <li><a href="" title="历史">历史</a></li>
-              <li><a href="" title="投稿">投稿</a></li>
+              <li class="msg" @mouseover="showMsgContainer" @mouseleave="hideMsgContainer">
+                <a class="userControl" href="" title="消息">消息</a>
+                <div class="msgContainer" ref="msgContainer" >
+                  <ul>
+                    <li><a>回复我的</a></li>
+                    <li><a>@我的</a></li>
+                    <li><a>收到的赞</a></li>
+                    <li><a>系统通知</a></li>
+                    <li><a>我的消息</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li @mouseover="showCondition" @mouseleave="hideCondition">
+                <a class="userControl" href="" title="动态">动态</a>
+                <div class="condition" ref="condition">
+                  <div class="menu">
+                    <ul>
+                      <li @click="conditionActive = 1" :class="{conditionOn: conditionActive=== 1}">视频</li>
+                      <li @click="conditionActive = 2" :class="{conditionOn: conditionActive=== 2}">直播</li>
+                      <li @click="conditionActive = 3" :class="{conditionOn: conditionActive=== 3}">画友</li>
+                      <li @click="conditionActive = 4" :class="{conditionOn: conditionActive=== 4}">专栏</li>
+                    </ul>
+                    <div class="line" :style="{left: 43+(conditionActive*40)+'px'}"></div>
+                    <div class="noCondition">暂时没有动态了哦</div>
+                    <div class="history">历史动态</div>
+                    <button>查看全部</button>
+                  </div>
+                </div>
+              </li>
+              <li><a class="userControl" href="" title="稍后再看">稍后再看</a></li>
+              <li><a class="userControl" href="" title="收藏夹">收藏夹</a></li>
+              <li><a class="userControl" href="" title="历史">历史</a></li>
+              <li class="tougao" @mouseover="showtougao" @mouseleave="hidetougao">
+                <a class="userControl" href="" title="投稿">投 稿</a>
+                <div class="tougaoContainer" ref="tougaoContainer">
+                  <ul>
+                    <li><a>专栏投稿</a></li>
+                    <li><a>音频投稿</a></li>
+                    <li><a>视频投稿</a></li>
+                    <li><a>投稿管理</a></li>
+                    <li><a>创作中心</a></li>
+                  </ul>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
       </div>
+      <img src="http://localhost:3000/image/logo.png">
     </div>
   </header>
 </template>
@@ -95,6 +134,11 @@
   import {throttle} from '@/common/js/utils'
   export default {
     name: '',
+    data () {
+      return {
+        conditionActive: 1
+      }
+    },
     methods: {
       avatarBigger () {
         throttle(() => {
@@ -119,12 +163,60 @@
         throttle(() => {
           this.$refs.mobileQR.style.display = 'none'
         }, 300)
+      },
+      showMsgContainer () {
+        throttle(() => {
+          this.$refs.msgContainer.style.visibility = 'visible'
+          this.$refs.msgContainer.style.opacity = 1
+        }, 300)
+      },
+      hideMsgContainer () {
+        throttle(() => {
+          this.$refs.msgContainer.style.visibility = 'hidden'
+          this.$refs.msgContainer.style.opacity = 0
+        }, 300)
+      },
+      showtougao () {
+        throttle(() => {
+          this.$refs.tougaoContainer.style.display = 'block'
+        }, 100)
+      },
+      hidetougao () {
+        throttle(() => {
+          this.$refs.tougaoContainer.style.display = 'none'
+        }, 100)
+      },
+      showCondition () {
+        throttle(() => {
+          this.$refs.condition.style.visibility = 'visible'
+          this.$refs.condition.style.opacity = 1
+        }, 300)
+      },
+      hideCondition () {
+        throttle(() => {
+          this.$refs.condition.style.visibility = 'hidden'
+          this.$refs.condition.style.opacity = 0
+        }, 300)
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import "../common/style/variable";
+
+  .conditionOn:after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: #66ccff;
+    font-size: 15px;
+    top: 22px;
+    left: 16px;
+  }
+
   header {
     width: 100%;
 
@@ -203,16 +295,75 @@
             float: right;
             li {
               float: left;
-              line-height: 42px;
-              font-size:12px;
-              padding: 0 10px;
+
               position: relative;
-              a {
+              a.userControl {
                 color: black;
+                line-height: 42px;
+                font-size:12px;
+                padding: 0 10px;
+                display: inline-block;
               }
-              &:nth-child(1) {
+              &:nth-child(1).user {
+                display: inline;
                 width: 64px;
+                line-height: 42px;
+                font-size:12px;
                 padding: 0;
+              }
+              &:nth-last-child(1).tougao{
+                background-color: $Bpink;
+                border-radius: 0 0 8px 8px;
+                &:hover {
+                  background-color: $BpinkLight;
+                }
+                a {
+                  font-size: 14px;
+                  padding: 0 15px;
+                  color: #ffffff;
+                  line-height: 48px;
+                }
+                div.tougaoContainer {
+                  position: absolute;
+                  left: -299px;
+                  top: 42px;
+                  display: none;
+                  ul {
+                    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+                    li {
+                      background-color: white;
+                      &:nth-child(1) {
+                        border-radius: 0 0 0 7px
+                      }
+                      &:nth-last-child(1) {
+                        border-radius: 0 0 7px 0
+                      }
+                      a {
+                        color: $Bpink;
+                        display: block;
+                        width: 72px;
+                        height: 64px;
+                        text-align: center;
+                        line-height: 30px;
+                        font-size: 12px;
+                        padding: 34px 0 0;
+                        box-sizing: border-box;
+                      }
+                      &:hover {
+                        background-color: $hover;
+                      }
+                    }
+                    &:after {
+                      content: '.';
+                      width: 0;
+                      height: 0;
+                      visibility: hidden;
+                      display: block;
+                      clear: both;
+                    }
+                  }
+
+                }
               }
               div.avatar {
                 width: 36px;
@@ -238,7 +389,7 @@
                 cursor: default;
                 padding: 40px 30px 0;
                 border-radius: 0 0 3px 3px;
-                box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.16);
+                box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
                 box-sizing: border-box;
                 div.username {
                   text-align: center;
@@ -407,6 +558,117 @@
                   }
                 }
               }
+              div.condition {
+                box-sizing: border-box;
+                padding: 0 20px;
+                width: 360px;
+                height: 410px;
+                background-color: #ffffff;
+                position: absolute;
+                left: -160px;
+                box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+                border-radius: 0 0 8px 8px;
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.3s;
+                div.menu {
+                  cursor: default;
+                  ul {
+                    cursor: pointer;
+                    display: flex;
+                    padding: 30px 0 20px;
+                    justify-content: center;
+                    li {
+                      float: none;
+                      font-size: 12px;
+                      width: 40px;
+                      text-align: center;
+                      position: relative;
+                    }
+                  }
+                  div.line {
+                    width: 30px;
+                    height: 2px;
+                    background-color: #66ccff;
+                    position: relative;
+                    top: -12px;
+                    transition: left 0.2s;
+                  }
+                  div.noCondition {
+                    color: $fontGrey;
+                    width: 100%;
+                    font-size: 12px;
+                    text-align: center;
+                  }
+                  div.history {
+                    margin-top: 30px;
+                    color: $fontGrey;
+                    width: 100%;
+                    font-size: 12px;
+                    text-align: center;
+                    position: relative;
+                    &:before {
+                      content: ' ';
+                      width: 121px;
+                      height: 1px;
+                      background-color: $fontGrey;
+                      position: absolute;
+                      top: 9px;
+                      left: 5px;
+                      opacity: 0.3;
+                    }
+                    &:after {
+                      content: ' ';
+                      width: 121px;
+                      height: 1px;
+                      background-color: $fontGrey;
+                      position: absolute;
+                      top: 9px;
+                      right: 5px;
+                      opacity: 0.3;
+                    }
+                  }
+                  button {
+                    border:0;
+                    background: #eeeeee;
+                    font-size: 12px;
+                    outline: none;
+                    display: block;
+                    margin: 230px auto 0;
+                    width: 100%;
+                    padding: 7px 0 7px;
+                  }
+                }
+              }
+              &.msg{
+                div.msgContainer {
+                  position: absolute;
+                  width: 110px;
+                  height: 200px;
+                  background-color: #ffffff;
+                  left: -32px;
+                  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+                  visibility: hidden;
+                  opacity: 0;
+                  transition: all 0.3s;
+                  border-radius: 0 0 5px 5px;
+                  li {
+                    width: 100%;
+                    float: none;
+                    display: block;
+                    a {
+                      text-align: center;
+                      line-height:40px;
+                      font-size: 12px;
+                      display: block;
+                      &:hover {
+                        color: #00a1d6;
+                        background-color: $hover;
+                      }
+                    }
+                  }
+                }
+              }
             }
             &:hover {
               cursor: pointer;
@@ -427,6 +689,12 @@
             }
           }
         }
+      }
+      img {
+        position: absolute;
+        top: 60px;
+        left:50%;
+        transform: translateX(-212%);
       }
     }
   }

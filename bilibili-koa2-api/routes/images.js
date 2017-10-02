@@ -1,10 +1,17 @@
 const router = require('koa-router')()
-const request = require('request-promise');
+const request = require('request-promise')
+const {imageUrl} = require('../url')
 
 router.prefix('/image')
 
 router.get('/header.png', async (ctx, next) => {
-  let image = await request({url: 'http://i0.hdslb.com/bfs/archive/7194f83fcb011b609f354e27d7188c29586df444.png', encoding: null})
+  let image = await request({url: imageUrl.header, encoding: null})
+  ctx.type = 'image/png'
+  ctx.body = image
+})
+
+router.get('/logo.png', async (ctx, next) => {
+  let image = await request({url: imageUrl.logo, encoding: null})
   ctx.type = 'image/png'
   ctx.body = image
 })
