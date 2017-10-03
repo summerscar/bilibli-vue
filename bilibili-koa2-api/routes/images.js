@@ -28,8 +28,18 @@ router.get('/mengzhan2.png', async (ctx, next) => {
   ctx.body = image
 })
 
-router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
+router.get('/menuGif.gif', async (ctx, next) => {
+  let image = await request({url: imageUrl.menuGif, encoding: null})
+  ctx.type = 'image/gif'
+  ctx.body = image
+})
+
+//  处理传来图片
+
+router.get('/dynamic/:picName', async (ctx, next) => {
+  let image = await request({url: imageUrl.imgPrefixArchive + ctx.params.picName, encoding: null})
+  ctx.type = 'image/gif'
+  ctx.body = image
 })
 
 module.exports = router

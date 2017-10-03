@@ -75,11 +75,11 @@
                   </div>
                   <div class="down">
                     <ul>
-                      <li><a href="">个人中心</a></li>
-                      <li><a href="">投稿管理</a></li>
-                      <li><a href="">B币钱包</a></li>
-                      <li><a href="">直播中心</a></li>
-                      <li><a href="">会员购订单</a></li>
+                      <li><a href="" ><i style="background: url(//static.hdslb.com/images/base/icons.png) no-repeat -472px -407px"></i><span>个人中心</span></a></li>
+                      <li><a href=""><i style="background: url(//static.hdslb.com/images/base/icons.png) no-repeat -536px -1046px"></i><span>投稿管理</span></a></li>
+                      <li><a href=""><i style="background: url(//static.hdslb.com/images/base/icons.png) no-repeat -472px -472px"></i><span>B币钱包</span></a></li>
+                      <li><a href=""><i style="background: url(//static.hdslb.com/images/base/icons.png) no-repeat -473px -855px"></i><span>直播中心</span></a></li>
+                      <li><a href=""><i style="background: url('//static.hdslb.com/images/base/icon-ticket.png') -2px 0"></i><span>会员购订单</span></a></li>
                     </ul>
                   </div>
                   <div class="exit">
@@ -165,11 +165,11 @@
                 <a class="userControl" href="" title="投稿">投 稿</a>
                 <div class="tougaoContainer" ref="tougaoContainer">
                   <ul>
-                    <li><a>专栏投稿</a></li>
-                    <li><a>音频投稿</a></li>
-                    <li><a>视频投稿</a></li>
-                    <li><a>投稿管理</a></li>
-                    <li><a>创作中心</a></li>
+                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -505px -906px;">专栏投稿</a></li>
+                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -507px -970px;">音频投稿</a></li>
+                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -906px;">视频投稿</a></li>
+                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -970px;">投稿管理</a></li>
+                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -1737px;">创作中心</a></li>
                   </ul>
                 </div>
               </li>
@@ -681,10 +681,23 @@
                   li {
                     width: 100px;
                     padding: 0;
-                    text-align: center;
+                    text-align: left;
                     line-height: 30px;
                     a {
+                      display: inline-block;
                       color: #000;
+                      i {
+                        vertical-align: top;
+                        display: inline-block;
+                        margin-right: 8px;
+                        width: 20px;
+                        height: 16px;
+                      }
+                      span{
+                        display: inline-block;
+                        vertical-align: top;
+                        line-height: 20px;
+                      }
                       &:hover {
                         color: #66ccff;
                       }
@@ -872,16 +885,16 @@
       }
       img.logo {
         position: absolute;
-        top: 60px;
+        top: 58px;
         left:50%;
-        transform: translateX(-212%);
+        transform: translateX(-246%);
       }
       div.search {
         z-index: 0;
         position: absolute;
         left: 50%;
         top: 66%;
-        transform: translateX(200px);
+        transform: translateX(250px);
         a {
           vertical-align: top;
           display: inline-block;

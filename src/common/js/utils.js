@@ -1,3 +1,5 @@
+import {url} from '@/common/js/url'
+
 const throttle = (fn, delay = 500) => {
   let timer = null
   return (function () {
@@ -10,5 +12,9 @@ const throttle = (fn, delay = 500) => {
   })()
 }
 
-export {throttle}
+const solveImgUrl = (imgUrl) => {
+  return url.getImg + imgUrl.split('/').slice(-1)[0]
+}
+
+export {throttle, solveImgUrl}
 

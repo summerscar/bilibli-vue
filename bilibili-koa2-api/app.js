@@ -5,13 +5,17 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const cors = require('koa2-cors')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
 const images = require('./routes/images')
+const banner = require('./routes/banner')
 
 // error handler
 onerror(app)
+
+app.use(cors())
 
 // middlewares
 app.use(bodyparser({
@@ -37,5 +41,6 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(images.routes(), images.allowedMethods())
+app.use(banner.routes(), banner.allowedMethods())
 
 module.exports = app
