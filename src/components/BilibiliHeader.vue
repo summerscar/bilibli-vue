@@ -7,7 +7,7 @@
         <div class="bar">
           <div class="index">
             <ul>
-              <li><a>主站</a></li>
+              <li class="logo"><a>主站</a></li>
               <li><a title="画友">画友</a></li>
               <li><a title="游戏中心">游戏中心</a></li>
               <li><a title="直播">直播</a></li>
@@ -20,7 +20,20 @@
                   </div>
                 </div>
               </li>
-              <li><a title="萌站">萌站</a></li>
+              <li @mouseover="showMengzhan" @mouseleave="hideMengzhan">
+                <a title="萌站">萌站</a>
+                <header-slide class="mengzhan" ref="mengzhan">
+                  <div class="title">前线动态</div>
+                  <ul>
+                   <li>
+                     <img src="http://localhost:3000/image/mengzhan1.png">
+                   </li>
+                    <li>
+                      <img src="http://localhost:3000/image/mengzhan2.png">
+                    </li>
+                  </ul>
+                </header-slide>
+              </li>
             </ul>
           </div>
           <div class="user">
@@ -101,14 +114,53 @@
                     </ul>
                     <div class="line" :style="{left: 43+(conditionActive*40)+'px'}"></div>
                     <div class="noCondition">暂时没有动态了哦</div>
-                    <div class="history">历史动态</div>
+                    <div class="historyHint">历史动态</div>
                     <button>查看全部</button>
                   </div>
                 </div>
               </li>
-              <li><a class="userControl" href="" title="稍后再看">稍后再看</a></li>
-              <li><a class="userControl" href="" title="收藏夹">收藏夹</a></li>
-              <li><a class="userControl" href="" title="历史">历史</a></li>
+              <li @mouseover="showLookLater" @mouseleave="hideLookLater">
+                <a class="userControl" href="" title="稍后再看">稍后再看</a>
+                <header-slide class="lookLater" ref="lookLater">
+                  <ul>
+                    <li>
+                      <a href="https://bangumi.bilibili.com/anime/6339/play#113364" target="_blank">欢迎来到实力至上主义的教室 : 第12话</a>
+                    </li>
+                    <li><a>妄想学生会 剧场版</a></li>
+                    <li><a>【BML2017主题2233娘】 交织together</a></li>
+                  </ul>
+                  <button slot="btn">播放全部<span> ></span></button>
+                  <button slot="btn">查看全部<span> ></span></button>
+                </header-slide>
+              </li>
+              <li @mouseover="showFav" @mouseleave="hideFav">
+                <a class="userControl" href="" title="收藏夹">收藏夹</a>
+                <header-slide class="fav" ref="fav">
+                  <ul>
+                    <li><a>欢迎来到实力至上主义的教室 : 第12话</a></li>
+                    <li><a>妄想学生会 剧场版</a></li>
+                    <li><a>【BML2017主题2233娘】 交织together</a></li>
+                  </ul>
+                  <button slot="btn">播放全部<span> ></span></button>
+                  <button slot="btn">查看全部<span> ></span></button>
+                </header-slide>
+              </li>
+              <li @mouseover="showHistory" @mouseleave="hideHistory">
+                <a class="userControl" href="" title="历史">历史</a>
+                <header-slide class="history" ref="history">
+                  <div class="today">今日</div>
+                  <ul>
+                    <li><a>【Lex】震惊，二次元公司居然是这个样子的！</a></li>
+                    <li><a>周刊哔哩哔哩排行榜#380</a></li>
+                  </ul>
+                  <div class="kino">昨日</div>
+                  <ul>
+                    <li><a>病名为爱 翻唱（YUKIriXHanser)</a></li>
+                    <li><a>papi的办公室玩耍——粤语音调说普通话</a></li>
+                  </ul>
+                  <button slot="btn">查看更多<span> ></span></button>
+                </header-slide>
+              </li>
               <li class="tougao" @mouseover="showtougao" @mouseleave="hidetougao">
                 <a class="userControl" href="" title="投稿">投 稿</a>
                 <div class="tougaoContainer" ref="tougaoContainer">
@@ -125,19 +177,29 @@
           </div>
         </div>
       </div>
-      <img src="http://localhost:3000/image/logo.png">
+      <a href=""><img class="logo" src="http://localhost:3000/image/logo.png"></a>
+      <div class="search">
+        <a href=""><span class="title">排行榜</span></a>
+        <div>
+          <input type="text" placeholder="我想牵着你的手，看鬼畜到尽头"><button></button>
+        </div>
+      </div>
     </div>
   </header>
 </template>
 
 <script>
   import {throttle} from '@/common/js/utils'
+  import HeaderSlide from '@/base/HeaderSlide'
   export default {
     name: '',
     data () {
       return {
         conditionActive: 1
       }
+    },
+    components: {
+      HeaderSlide
     },
     methods: {
       avatarBigger () {
@@ -197,6 +259,54 @@
           this.$refs.condition.style.visibility = 'hidden'
           this.$refs.condition.style.opacity = 0
         }, 300)
+      },
+      showLookLater () {
+        throttle(() => {
+          this.$refs.lookLater.$el.style.visibility = 'visible'
+          this.$refs.lookLater.$el.style.opacity = 1
+        }, 300)
+      },
+      hideLookLater () {
+        throttle(() => {
+          this.$refs.lookLater.$el.style.visibility = 'hidden'
+          this.$refs.lookLater.$el.style.opacity = 0
+        }, 300)
+      },
+      showFav () {
+        throttle(() => {
+          this.$refs.fav.$el.style.visibility = 'visible'
+          this.$refs.fav.$el.style.opacity = 1
+        }, 300)
+      },
+      hideFav () {
+        throttle(() => {
+          this.$refs.fav.$el.style.visibility = 'hidden'
+          this.$refs.fav.$el.style.opacity = 0
+        }, 300)
+      },
+      showHistory () {
+        throttle(() => {
+          this.$refs.history.$el.style.visibility = 'visible'
+          this.$refs.history.$el.style.opacity = 1
+        }, 300)
+      },
+      hideHistory () {
+        throttle(() => {
+          this.$refs.history.$el.style.visibility = 'hidden'
+          this.$refs.history.$el.style.opacity = 0
+        }, 300)
+      },
+      showMengzhan () {
+        throttle(() => {
+          this.$refs.mengzhan.$el.style.visibility = 'visible'
+          this.$refs.mengzhan.$el.style.opacity = 1
+        }, 300)
+      },
+      hideMengzhan () {
+        throttle(() => {
+          this.$refs.mengzhan.$el.style.visibility = 'hidden'
+          this.$refs.mengzhan.$el.style.opacity = 0
+        }, 300)
       }
     }
   }
@@ -242,7 +352,7 @@
 
         div.bar{
           max-width: 1160px;
-          min-width: 800px;
+          min-width: 990px;
           margin:0 auto;
           height: 100%;
           a:hover{
@@ -281,13 +391,34 @@
                 background-color: rgba(255,255,255,0.3);
               }
 
-              &:nth-child(1) {
+              &:nth-child(1).logo {
                 background-image: url(http://static.hdslb.com/images/base/icons.png);
                 background-position:-910px -74px;
 
                  a{
                    padding-left: 20px;
                  }
+              }
+              div.mengzhan {
+                position: absolute;
+                left: 0;
+                width: 300px;
+                height: 250px;
+                opacity: 0;
+                visibility: hidden;
+                div.title {
+                  font-size: 12px;
+                  line-height: 100%;
+                  padding: 8px 15px;
+                  font-weight: bold;
+                }
+                li {
+                  padding: 10px 10px;
+                  line-height: 100%;
+                  overflow: visible;
+                  height: 85px;
+                  list-style: none;
+                }
               }
             }
           }
@@ -366,6 +497,8 @@
                 }
               }
               div.avatar {
+                position: relative;
+                z-index: 2;
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
@@ -377,6 +510,7 @@
                 margin: 3px auto;
               }
               div.detail {
+                z-index: 1;
                 width: 260px;
                 height: 320px;
                 background-color: #ffffff;
@@ -559,6 +693,7 @@
                 }
               }
               div.condition {
+                z-index: 999;
                 box-sizing: border-box;
                 padding: 0 20px;
                 width: 360px;
@@ -600,7 +735,7 @@
                     font-size: 12px;
                     text-align: center;
                   }
-                  div.history {
+                  div.historyHint {
                     margin-top: 30px;
                     color: $fontGrey;
                     width: 100%;
@@ -630,43 +765,88 @@
                   }
                   button {
                     border:0;
-                    background: #eeeeee;
+                    background: $btnGrey;
                     font-size: 12px;
                     outline: none;
                     display: block;
                     margin: 230px auto 0;
                     width: 100%;
                     padding: 7px 0 7px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    &:hover {
+                      background: $btnHover;
+                    }
                   }
                 }
               }
-              &.msg{
-                div.msgContainer {
-                  position: absolute;
-                  width: 110px;
-                  height: 200px;
-                  background-color: #ffffff;
-                  left: -32px;
-                  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
-                  visibility: hidden;
-                  opacity: 0;
-                  transition: all 0.3s;
-                  border-radius: 0 0 5px 5px;
-                  li {
-                    width: 100%;
-                    float: none;
+              div.msgContainer {
+                z-index: 999;
+                position: absolute;
+                width: 110px;
+                height: 200px;
+                background-color: #ffffff;
+                left: -32px;
+                box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.3s;
+                border-radius: 0 0 5px 5px;
+                li {
+                  width: 100%;
+                  float: none;
+                  display: block;
+                  a {
+                    text-align: center;
+                    line-height:40px;
+                    font-size: 12px;
                     display: block;
-                    a {
-                      text-align: center;
-                      line-height:40px;
-                      font-size: 12px;
-                      display: block;
-                      &:hover {
-                        color: #00a1d6;
-                        background-color: $hover;
-                      }
+                    &:hover {
+                      color: #00a1d6;
+                      background-color: $hover;
                     }
                   }
+                }
+              }
+              div.lookLater {
+                position: absolute;
+                left: -145px;
+                visibility: hidden;
+                opacity: 0;
+                button {
+                  width: 45%;
+                }
+              }
+              div.fav {
+                position: absolute;
+                left: -145px;
+                visibility: hidden;
+                opacity: 0;
+                button {
+                  width: 45%;
+                }
+              }
+              div.history {
+                position: absolute;
+                left: -145px;
+                visibility: hidden;
+                opacity: 0;
+                div.today,div.kino {
+                  font-size: 12px;
+                  padding: 3px 15px;
+                  position: relative;
+                  &:after {
+                    content: ' ';
+                    width: 80%;
+                    height: 1px;
+                    background-color: $line;
+                    position: absolute;
+                    left: 53px;
+                    top:11px;
+                  }
+                }
+                button {
+                  width: 90%;
                 }
               }
             }
@@ -690,11 +870,68 @@
           }
         }
       }
-      img {
+      img.logo {
         position: absolute;
         top: 60px;
         left:50%;
         transform: translateX(-212%);
+      }
+      div.search {
+        z-index: 0;
+        position: absolute;
+        left: 50%;
+        top: 66%;
+        transform: translateX(200px);
+        a {
+          vertical-align: top;
+          display: inline-block;
+          background-color: rgba(255, 255, 255, 0.8);
+          box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+          border-radius: 3px;
+          transition: all 0.2s;
+          span.title {
+            display: inline-block;
+            font-size: 12px;
+            line-height: 30px;
+            padding-left: 26px;
+            padding-right: 5px;
+            color: $BpinkText;
+            background: url(//static.hdslb.com/images/base/icons.png) -659px -657px no-repeat
+          }
+          &:hover {
+            background-color: rgba(255, 255, 255, 1);
+          }
+        }
+        div {
+          vertical-align: top;
+          display: inline-block;
+          background-color: rgba(255, 255, 255, 0.8);
+          box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+          border-radius: 3px;
+          transition: all 0.2s;
+          input {
+            padding: 0 3px;
+            width: 200px;
+            line-height: 30px;
+            font-size: 12px;
+            outline: 0;
+            border: 0;
+            display: inline-block;
+            vertical-align: top;
+            background-color: transparent;
+          }
+          button {
+            vertical-align: top;
+            background: url(//static.hdslb.com/images/base/icons.png) -653px -720px;
+            width: 48px;
+            height: 32px;
+            border:0;
+          }
+          &:hover {
+            background-color: rgba(255, 255, 255, 1);
+          }
+        }
+
       }
     }
   }

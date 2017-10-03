@@ -11,6 +11,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "debug": "^2.6.3",
     "koa": "^2.2.0",
     "koa-bodyparser": "^3.2.0",
