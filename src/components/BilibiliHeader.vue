@@ -371,8 +371,8 @@
         width: 100%;
 
         div.bar{
-          max-width: 1160px;
-          min-width: 990px;
+          max-width: $max-width;
+          min-width: $min-width;
           margin:0 auto;
           height: 100%;
           a:hover{

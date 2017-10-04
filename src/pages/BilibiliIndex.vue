@@ -1,6 +1,10 @@
 <template>
   <div id="bilibili">
-    <bilibili-banner :dataArr="banner" :delay="4000"></bilibili-banner>
+    <div class="bannerRank">
+      <bilibili-banner :dataArr="banner" :delay="4000" class="banner"></bilibili-banner>
+      <bilibili-rank></bilibili-rank>
+    </div>
+   <bilibili-wrap :posX="-141" :posY="-75"></bilibili-wrap>
   </div>
 </template>
 
@@ -9,25 +13,18 @@
   import {url} from '@/common/js/url'
   import {solveImgUrl} from '@/common/js/utils'
   import BilibiliBanner from '@/base/BilibiliBanner'
+  import BilibiliRank from '@/components/BilibiliRank'
+  import BilibiliWrap from '@/components/BilibiliWrap'
 
   export default {
     name: '',
     data () {
       return {
-        banner: [],
-        rankDay: [],
-        rankThree: [],
-        rankWeek: []
+        banner: []
       }
     },
     mounted () {
       this.getBanner()
-
-      this.getRankDay()
-/*
-      this.getRankThree()
-      this.getRankWeek()
-*/
     },
     methods: {
       async getBanner () {
@@ -37,59 +34,35 @@
           return item
         })
         console.log('轮播图数据', this.banner)
-      },
-      async getRankDay () {
-        let {data: {rank: {list: res}}} = await axios.get(url.rankDay)
-        let key = []
-        let tempArr = []
-        while (key.length < 8) {
-          let num = Math.random() * 100 | 0
-          if (key.indexOf(num) !== -1) return
-          key.push(num)
-        }
-        key.forEach((item) => {
-          tempArr.push(res[item])
-        })
-        this.rankDay = tempArr
-      },
-      async getRankThree () {
-        let {data: {rank: {list: res}}} = await axios.get(url.rankThree)
-        let key = []
-        let tempArr = []
-        while (key.length < 8) {
-          let num = Math.random() * 100 | 0
-          if (key.indexOf(num) !== -1) return
-          key.push(num)
-        }
-        key.forEach((item) => {
-          tempArr.push(res[item])
-        })
-        this.rankThree = tempArr
-      },
-      async getRankWeek () {
-        let {data: {rank: {list: res}}} = await axios.get(url.rankWeek)
-        let key = []
-        let tempArr = []
-        while (key.length < 8) {
-          let num = Math.random() * 100 | 0
-          if (key.indexOf(num) !== -1) return
-          key.push(num)
-        }
-        key.forEach((item) => {
-          tempArr.push(res[item])
-        })
-        this.rankWeek = tempArr
       }
     },
     components: {
-      BilibiliBanner
+      BilibiliBanner,
+      BilibiliRank,
+      BilibiliWrap
     }
   }
 </script>
 
 <style  lang="scss" scoped>
-  #bilibili {
-    width: 1160px;
+  @import "../common/style/variable";
 
+  #bilibili {
+    max-width: $max-width;
+    min-width: $min-width;
+    div.bannerRank {
+      width: 100%;
+      div.banner{
+        float: left;
+      }
+      &:after {
+        content: ',';
+        display: block;
+        visibility: hidden;
+        height: 0;
+        width: 0;
+        clear: both;
+      }
+    }
   }
 </style>

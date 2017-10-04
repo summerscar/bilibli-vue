@@ -1,24 +1,22 @@
 <template>
-  <div>
-    <div ref="main_warp" class="main_warp" v-if="dataArr.length">
-      <div class="warp" ref="warp" :style="{transition: 'left '+ animateDelay +'ms', left: (-width) * Bindex + 'px'}">
-        <div class="item" v-for="item in dataArr">
-          <a :href="item.url" target="_blank">
-            <img ref="image" width="440" height="220" :src="item.pic">
-          </a>
-        </div>
+  <div ref="main_warp" class="main_warp" v-if="dataArr.length">
+    <div class="warp" ref="warp" :style="{transition: 'left '+ animateDelay +'ms', left: (-width) * Bindex + 'px'}">
+      <div class="item" v-for="item in dataArr">
+        <a :href="item.url" target="_blank">
+          <img ref="image" width="440" height="220" :src="item.pic">
+        </a>
       </div>
-      <div class="content" ref="content">
-        {{dataArr[Bindex].name}}
-      </div>
-      <div class="pot">
-        <ul>
-          <li v-for="(item, index) in dataArr"><span class="item" :class="{active: index === Bindex }" @click="Bindex = index"></span></li>
-        </ul>
-      </div>
-      <div class="tips">
-        <a href="https://www.bilibili.com/blackboard/topic_list.html#/" target="_blank">更多 ></a>
-      </div>
+    </div>
+    <div class="content" ref="content">
+      {{dataArr[Bindex].name}}
+    </div>
+    <div class="pot">
+      <ul>
+        <li v-for="(item, index) in dataArr"><span class="item" :class="{active: index === Bindex }" @click="Bindex = index"></span></li>
+      </ul>
+    </div>
+    <div class="tips">
+      <a href="https://www.bilibili.com/blackboard/topic_list.html#/" target="_blank">更多 ></a>
     </div>
   </div>
 </template>

@@ -62,7 +62,8 @@
     font-size: 13px;
     padding-bottom: 30px;
     div.warp_up{
-      width: 1160px;
+      max-width: $max-width;
+      min-width: $min-width;
       margin: 0 auto;
       display: flex;
       div.item {
