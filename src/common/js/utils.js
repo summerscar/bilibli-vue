@@ -13,7 +13,7 @@ const throttle = (fn, delay = 500) => {
 }
 
 const solveImgUrl = (imgUrl) => {
-  return url.getImg + imgUrl.split('/').slice(-1)[0]
+  return url.getImg + imgUrl.split('/').slice(4).join('/')
 }
 
 export {throttle, solveImgUrl}

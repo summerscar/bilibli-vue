@@ -1,5 +1,5 @@
 <template>
-  <div class="headerSlide">
+  <div class="headerSlide" ref="headerSlide">
     <slot></slot>
     <div class="btn">
       <slot name="btn"></slot>
@@ -8,14 +8,32 @@
 </template>
 
 <script>
+  import {throttle} from '@/common/js/utils'
+
   export default {
-    name: ''
+    name: '',
+    methods: {
+      show () {
+        throttle(() => {
+          this.$refs.headerSlide.style.visibility = 'visible'
+          this.$refs.headerSlide.style.opacity = 1
+        }, 300)
+      },
+      hide () {
+        throttle(() => {
+          this.$refs.headerSlide.style.visibility = 'hidden'
+          this.$refs.headerSlide.style.opacity = 0
+        }, 300)
+      }
+    }
   }
 </script>
 
 <style  lang="scss" scoped>
   @import "../common/style/variable";
   .headerSlide {
+    visibility: hidden;
+    opacity: 0;
     z-index: 999;
     box-sizing: border-box;
     width: 360px;

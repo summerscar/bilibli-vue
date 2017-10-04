@@ -11,6 +11,8 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const images = require('./routes/images')
 const banner = require('./routes/banner')
+const header = require('./routes/header')
+const defaultWord = require('./routes/defaultWord')
 
 // error handler
 onerror(app)
@@ -42,5 +44,7 @@ app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(images.routes(), images.allowedMethods())
 app.use(banner.routes(), banner.allowedMethods())
+app.use(header.routes(), header.allowedMethods())
+app.use(defaultWord.routes(), defaultWord.allowedMethods())
 
 module.exports = app

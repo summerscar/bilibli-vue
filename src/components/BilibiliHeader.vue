@@ -1,27 +1,27 @@
 <template>
   <header>
-    <div class="header" style="background-image: url(http://localhost:3000/image/header.png)">
-      <div class="bgFlur" style="background-image: url(http://localhost:3000/image/header.png)">
+    <div class="header" :style="{backgroundImage: 'url(' + headerData.pic + ')'}" @mouseover="showTitle" @mouseleave="hideTitle">
+      <div class="bgFlur" :style="{backgroundImage: 'url(' + headerData.pic + ')'}">
       </div>
-      <div class="barContainer">
+      <div class="barContainer" :class="{black: headerData.style === 1, white: headerData.style !== 1}">
         <div class="bar">
           <div class="index">
             <ul>
-              <li class="logo"><a>主站</a></li>
-              <li><a title="画友">画友</a></li>
-              <li><a title="游戏中心">游戏中心</a></li>
-              <li><a title="直播">直播</a></li>
-              <li><a title="会员购">会员购</a></li>
-              <li><a title="周边">周边</a></li>
+              <li class="logo"><a :class="{fontWhite: headerData.style === 1}">主站</a></li>
+              <li><a title="画友" :class="{fontWhite: headerData.style === 1}">画友</a></li>
+              <li><a title="游戏中心" :class="{fontWhite: headerData.style === 1}">游戏中心</a></li>
+              <li><a title="直播" :class="{fontWhite: headerData.style === 1}">直播</a></li>
+              <li><a title="会员购" :class="{fontWhite: headerData.style === 1}">会员购</a></li>
+              <li><a title="周边" :class="{fontWhite: headerData.style === 1}">周边</a></li>
               <li @mouseover="showQR"  @mouseleave="hideQR">
-                <a title="移动端">移动端</a>
+                <a title="移动端" :class="{fontWhite: headerData.style === 1}">移动端</a>
                 <div class="mobile" ref="mobileQR">
                   <div class="qr">
                   </div>
                 </div>
               </li>
               <li @mouseover="showMengzhan" @mouseleave="hideMengzhan">
-                <a title="萌站">萌站</a>
+                <a title="萌站" :class="{fontWhite: headerData.style === 1}">萌站</a>
                 <header-slide class="mengzhan" ref="mengzhan">
                   <div class="title">前线动态</div>
                   <ul>
@@ -91,7 +91,7 @@
                 </a>
               </li>
               <li class="msg" @mouseover="showMsgContainer" @mouseleave="hideMsgContainer">
-                <a class="userControl" href="" title="消息">消息</a>
+                <a class="userControl" href="" title="消息" :class="{fontWhite: headerData.style === 1}">消息</a>
                 <div class="msgContainer" ref="msgContainer" >
                   <ul>
                     <li><a>回复我的</a></li>
@@ -103,7 +103,7 @@
                 </div>
               </li>
               <li @mouseover="showCondition" @mouseleave="hideCondition">
-                <a class="userControl" href="" title="动态">动态</a>
+                <a class="userControl" href="" title="动态" :class="{fontWhite: headerData.style === 1}">动态</a>
                 <div class="condition" ref="condition">
                   <div class="menu">
                     <ul>
@@ -120,7 +120,7 @@
                 </div>
               </li>
               <li @mouseover="showLookLater" @mouseleave="hideLookLater">
-                <a class="userControl" href="" title="稍后再看">稍后再看</a>
+                <a class="userControl" href="" title="稍后再看" :class="{fontWhite: headerData.style === 1}">稍后再看</a>
                 <header-slide class="lookLater" ref="lookLater">
                   <ul>
                     <li>
@@ -134,7 +134,7 @@
                 </header-slide>
               </li>
               <li @mouseover="showFav" @mouseleave="hideFav">
-                <a class="userControl" href="" title="收藏夹">收藏夹</a>
+                <a class="userControl" href="" title="收藏夹" :class="{fontWhite: headerData.style === 1}">收藏夹</a>
                 <header-slide class="fav" ref="fav">
                   <ul>
                     <li><a>欢迎来到实力至上主义的教室 : 第12话</a></li>
@@ -146,7 +146,7 @@
                 </header-slide>
               </li>
               <li @mouseover="showHistory" @mouseleave="hideHistory">
-                <a class="userControl" href="" title="历史">历史</a>
+                <a class="userControl" href="" title="历史" :class="{fontWhite: headerData.style === 1}">历史</a>
                 <header-slide class="history" ref="history">
                   <div class="today">今日</div>
                   <ul>
@@ -177,11 +177,12 @@
           </div>
         </div>
       </div>
-      <a href=""><img class="logo" src="http://localhost:3000/image/logo.png"></a>
+      <a href=""><img class="logo" :src="headerData.litpic"></a>
+      <a class="headerTitle" :href="headerData.url" target="_blank" ref="headerTitle">{{headerData.name}}</a>
       <div class="search">
         <a href=""><span class="title">排行榜</span></a>
         <div>
-          <input type="text" placeholder="我想牵着你的手，看鬼畜到尽头"><button></button>
+          <input type="text" :placeholder="defaultWord.show"><button></button>
         </div>
       </div>
     </div>
@@ -189,19 +190,44 @@
 </template>
 
 <script>
-  import {throttle} from '@/common/js/utils'
+  import {throttle, solveImgUrl} from '@/common/js/utils'
   import HeaderSlide from '@/base/HeaderSlide'
+  import axios from 'axios'
+  import {url} from '@/common/js/url'
+
   export default {
     name: '',
     data () {
       return {
-        conditionActive: 1
+        conditionActive: 1,
+        headerData: {},
+        defaultWord: {}
       }
     },
     components: {
       HeaderSlide
     },
+    created () {
+      this.getHeaderData()
+      this.getDefaultWord()
+    },
     methods: {
+      async getDefaultWord () {
+        let {data: res} = await axios.get(url.defaultWord)
+        this.defaultWord = res[0]
+      },
+      async getHeaderData () {
+        let {data: {data: [res]}} = await axios.get(url.header)
+        res.pic = solveImgUrl(res.pic)
+        res.litpic = solveImgUrl(res.litpic)
+        this.headerData = res
+      },
+      showTitle () {
+        this.$refs.headerTitle.style.opacity = 1
+      },
+      hideTitle () {
+        this.$refs.headerTitle.style.opacity = 0
+      },
       avatarBigger () {
         throttle(() => {
           this.$refs.avatar.style.transform = 'scale(1.7)'
@@ -261,40 +287,22 @@
         }, 300)
       },
       showLookLater () {
-        throttle(() => {
-          this.$refs.lookLater.$el.style.visibility = 'visible'
-          this.$refs.lookLater.$el.style.opacity = 1
-        }, 300)
+        this.$refs.lookLater.show()
       },
       hideLookLater () {
-        throttle(() => {
-          this.$refs.lookLater.$el.style.visibility = 'hidden'
-          this.$refs.lookLater.$el.style.opacity = 0
-        }, 300)
+        this.$refs.lookLater.hide()
       },
       showFav () {
-        throttle(() => {
-          this.$refs.fav.$el.style.visibility = 'visible'
-          this.$refs.fav.$el.style.opacity = 1
-        }, 300)
+        this.$refs.fav.show()
       },
       hideFav () {
-        throttle(() => {
-          this.$refs.fav.$el.style.visibility = 'hidden'
-          this.$refs.fav.$el.style.opacity = 0
-        }, 300)
+        this.$refs.fav.hide()
       },
       showHistory () {
-        throttle(() => {
-          this.$refs.history.$el.style.visibility = 'visible'
-          this.$refs.history.$el.style.opacity = 1
-        }, 300)
+        this.$refs.history.show()
       },
       hideHistory () {
-        throttle(() => {
-          this.$refs.history.$el.style.visibility = 'hidden'
-          this.$refs.history.$el.style.opacity = 0
-        }, 300)
+        this.$refs.history.hide()
       },
       showMengzhan () {
         throttle(() => {
@@ -314,6 +322,18 @@
 
 <style lang="scss" scoped>
   @import "../common/style/variable";
+  .fontWhite {
+    color: #ffffff!important;
+  }
+  .fontBlack {
+    color: #000;
+  }
+  .white {
+    background-color: rgba(255,255,255,0.4);
+  }
+  .black {
+    background-color: rgba(0,0,0,0.4);
+  }
 
   .conditionOn:after {
     content: '';
@@ -329,6 +349,7 @@
 
   header {
     width: 100%;
+
 
     div.header{
       height: 170px;
@@ -348,7 +369,6 @@
         position: absolute;
         height: 42px;
         width: 100%;
-        background-color: rgba(255,255,255,0.4);
 
         div.bar{
           max-width: 1160px;
@@ -824,8 +844,6 @@
               div.lookLater {
                 position: absolute;
                 left: -145px;
-                visibility: hidden;
-                opacity: 0;
                 button {
                   width: 45%;
                 }
@@ -833,8 +851,6 @@
               div.fav {
                 position: absolute;
                 left: -145px;
-                visibility: hidden;
-                opacity: 0;
                 button {
                   width: 45%;
                 }
@@ -842,8 +858,6 @@
               div.history {
                 position: absolute;
                 left: -145px;
-                visibility: hidden;
-                opacity: 0;
                 div.today,div.kino {
                   font-size: 12px;
                   padding: 3px 15px;
@@ -888,6 +902,21 @@
         top: 58px;
         left:50%;
         transform: translateX(-246%);
+      }
+      a.headerTitle {
+        position: absolute;
+        left: 50%;
+        top:115px;
+        display: inline-block;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.65);
+        line-height: 25px;
+        color: white;
+        font-size: 14px;
+        transform: translateX(-326px);
+        padding: 3px 15px;
+        transition: all .3s;
+        opacity: 0;
       }
       div.search {
         z-index: 0;
