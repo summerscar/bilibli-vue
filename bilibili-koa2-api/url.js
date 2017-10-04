@@ -12,11 +12,22 @@ const banner = 'http://api.bilibili.com/x/web-show/res/loc?jsonp=jsonp&pf=0&id=2
 //  搜索词
 const defaultWord = 'http://www.bilibili.com/widget/getSearchDefaultWords'
 
-//右侧排行
-const rank = {
-  rankYesterday: 'http://www.bilibili.com/index/ranking.json',
-  rankWeek: 'http://www.bilibili.com/index/ranking-week.json',
-  rankThreeDay: 'http://www.bilibili.com/index/ranking-3day.json'
+//  第二行推广与每分区标题右侧小字推广
+const promote = {
+  default: 'https://api.bilibili.com/x/web-show/res/locs?pf=0&jsonp=jsonp&ids=23%2C34%2C29%2C31%2C40%2C42%2C44&_=1507105984369',
+  hot: 'https://api.bilibili.com/x/web-show/res/locs?pf=0&jsonp=jsonp&ids=1550%2C1554%2C1556%2C1919%2C1558%2C1560%2C1562%2C1624%2C1564%2C1566%2C1568%2C1636%2C1570%2C1572%2C1574&_=1507086097872'
 }
 
-module.exports = {imageUrl, banner, defaultWord, rank}
+//  菜单数据
+const menuData = 'https://api.bilibili.com/x/web-interface/online?jsonp=jsonp&_=1507086094756'
+
+//  底层推荐
+const recommend = 'https://api.imjad.cn/bilibili/v2/?get=recommend'
+
+//  各分区数据
+const AllData = 'https://api.bilibili.com/x/web-interface/dynamic/index?jsonp=jsonp&_=1507105986455'
+
+//  直播数据
+const live = 'http://api.live.bilibili.com/bili/recom'
+
+module.exports = {imageUrl, banner, defaultWord, rank, promote, menuData, recommend, AllData, live}

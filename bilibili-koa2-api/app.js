@@ -13,6 +13,11 @@ const images = require('./routes/images')
 const banner = require('./routes/banner')
 const header = require('./routes/header')
 const defaultWord = require('./routes/defaultWord')
+const promote = require('./routes/promote')
+const menuData = require('./routes/menuData')
+const recommend = require('./routes/recommend')
+const allData = require('./routes/allData')
+const live = require('./routes/live')
 
 // error handler
 onerror(app)
@@ -46,5 +51,10 @@ app.use(images.routes(), images.allowedMethods())
 app.use(banner.routes(), banner.allowedMethods())
 app.use(header.routes(), header.allowedMethods())
 app.use(defaultWord.routes(), defaultWord.allowedMethods())
+app.use(promote.routes(), promote.allowedMethods())
+app.use(menuData.routes(), menuData.allowedMethods())
+app.use(recommend.routes(), recommend.allowedMethods())
+app.use(allData.routes(), allData.allowedMethods())
+app.use(live.routes(), live.allowedMethods())
 
 module.exports = app
