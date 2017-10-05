@@ -5,8 +5,8 @@ const {promote} = require('../url')
 router.prefix('/promote')
 
 router.get('/', async (ctx, next) => {
-  let res = await request(promote.default)
-  ctx.body = res
+  let {data: {34: res}} = JSON.parse(await request(promote.default))
+  ctx.body = JSON.stringify(res)
 })
 
 router.get('/hot', async (ctx, next) => {

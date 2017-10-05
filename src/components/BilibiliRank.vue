@@ -50,7 +50,6 @@
             this.getRankWeek()
             console.log('一周数据')
           }
-          console.log(this.rankData)
         } catch (e) {
           console.log(e)
         }
@@ -96,7 +95,6 @@
       position: relative;
       width: 720px;
       height: 220px;
-      float: left;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;

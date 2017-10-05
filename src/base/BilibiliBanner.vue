@@ -12,7 +12,7 @@
     </div>
     <div class="pot">
       <ul>
-        <li v-for="(item, index) in dataArr"><span class="item" :class="{active: index === Bindex }" @click="Bindex = index"></span></li>
+        <li v-for="(item, index) in dataArr"><span class="item" :class="{active: index === Bindex }" @click="changeIndex(index)"></span></li>
       </ul>
     </div>
     <div class="tips">
@@ -55,6 +55,10 @@
       }
     },
     methods: {
+      changeIndex (index) {
+        this.Bindex = index
+        this.init()
+      },
       init () {
         this.$nextTick(() => {
           this.width = this.$refs.image[0].width

@@ -178,7 +178,7 @@
         </div>
       </div>
       <a href=""><img class="logo" :src="headerData.litpic"></a>
-      <a class="headerTitle" :href="headerData.url" target="_blank" ref="headerTitle">{{headerData.name}}</a>
+      <a v-if="headerData.name" class="headerTitle" :href="headerData.url" target="_blank" ref="headerTitle">{{headerData.name}}</a>
       <div class="search">
         <a href=""><span class="title">排行榜</span></a>
         <div>
@@ -223,9 +223,11 @@
         this.headerData = res
       },
       showTitle () {
+        if (!this.headerData.name) return
         this.$refs.headerTitle.style.opacity = 1
       },
       hideTitle () {
+        if (!this.headerData.name) return
         this.$refs.headerTitle.style.opacity = 0
       },
       avatarBigger () {

@@ -27,6 +27,7 @@
   @import "../common/style/variable";
 
   div.BilibiliTitle {
+    padding-bottom: 15px;
     span.BlibiliIcon {
       position: relative;
       vertical-align: bottom;

@@ -30,4 +30,4 @@ const AllData = 'https://api.bilibili.com/x/web-interface/dynamic/index?jsonp=js
 //  直播数据
 const live = 'http://api.live.bilibili.com/bili/recom'
 
-module.exports = {imageUrl, banner, defaultWord, rank, promote, menuData, recommend, AllData, live}
+module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live}

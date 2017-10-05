@@ -23,5 +23,13 @@ const rdNum = (n, m) => {
   return Math.floor(Math.random() * c + n)
 }
 
-export {throttle, solveImgUrl, rdNum}
+const sec2Time = (time) => {
+  let min = (time / 60) | 0
+  min = min < 10 ? `0${min}` : min
+  let sec = (time % 60)
+  sec = sec < 10 ? `0${sec}` : sec
+  return `${min}:${sec}`
+}
+
+export {throttle, solveImgUrl, rdNum, sec2Time}
 
