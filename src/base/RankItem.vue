@@ -61,7 +61,7 @@
         font-size: 12px;
         height: 30px;
         color: #ffffff;
-        background: linear-gradient(top, rgba(255,255,255,0), rgba(0, 0, 0, 0.60));
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.2) 35%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.9));
         border-radius: 5px;
         div.text {
           padding-left: 5px;

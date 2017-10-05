@@ -31,5 +31,11 @@ const sec2Time = (time) => {
   return `${min}:${sec}`
 }
 
-export {throttle, solveImgUrl, rdNum, sec2Time}
+const num2Wan = (num) => {
+  let wan = (num / 10000) | 0
+  let thousand = ((num - wan * 10000) / 1000) | 0
+  return `${wan}.${thousand}万`
+}
+
+export {throttle, solveImgUrl, rdNum, sec2Time, num2Wan}
 

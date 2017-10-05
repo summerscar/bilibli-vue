@@ -18,9 +18,9 @@
     </div>
     <div class="wrapRight">
       <!--直播排行榜-->
-      <live-rank v-if="liveData"></live-rank>
+      <live-rank v-if="liveData" :liveRankData="liveData.ranking"></live-rank>
 
-      <div class="statusWarp">
+      <div class="statusWarp" v-if="promoteData.length || recommendData.length">
         <slot name="status"></slot>
       </div>
 
