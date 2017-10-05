@@ -11,7 +11,7 @@
 <script>
   import axios from 'axios'
   import {url} from '@/common/js/url'
-  import {solveImgUrl, rdNum} from '@/common/js/utils'
+  import {rdNum} from '@/common/js/utils'
   import RankItem from '@/base/RankItem'
 
   export default {
@@ -58,27 +58,18 @@
         let {data: {rank: {list: res}}} = await axios.get(url.rankDay)
         let rdnum = rdNum(0, 92)
         let tempArr = res.slice(rdnum, rdnum + 8)
-        tempArr.forEach((item) => {
-          item.pic = solveImgUrl(item.pic)
-        })
         this.rankData = tempArr
       },
       async getRankThree () {
         let {data: {rank: {list: res}}} = await axios.get(url.rankThree)
         let rdnum = rdNum(0, 92)
         let tempArr = res.slice(rdnum, rdnum + 8)
-        tempArr.forEach((item) => {
-          item.pic = solveImgUrl(item.pic)
-        })
         this.rankData = tempArr
       },
       async getRankWeek () {
         let {data: {rank: {list: res}}} = await axios.get(url.rankWeek)
         let rdnum = rdNum(0, 92)
         let tempArr = res.slice(rdnum, rdnum + 8)
-        tempArr.forEach((item) => {
-          item.pic = solveImgUrl(item.pic)
-        })
         this.rankData = tempArr
       }
     },

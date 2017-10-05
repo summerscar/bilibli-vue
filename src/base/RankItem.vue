@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank">
-      <img :src="item.pic" width="160" height="100">
+      <img :src="solveImgUrl(item.pic)" width="160" height="100">
       <div class="title-small"><div class="text">{{item.title}}</div></div>
       <div class="mask">
         <div class="title">
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+  import {solveImgUrl} from '@/common/js/utils'
+
   export default {
     name: '',
     props: {
@@ -29,6 +31,9 @@
     data () {
       return {
       }
+    },
+    methods: {
+      solveImgUrl
     }
   }
 </script>

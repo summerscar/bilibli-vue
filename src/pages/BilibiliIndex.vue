@@ -5,18 +5,30 @@
       <bilibili-rank></bilibili-rank>
     </div>
     <div class="promote">
-      <bilibili-wrap :posX="-141" :posY="-75" :promoteData="promoteData">
-        <div slot="status">
-          <div class="status">
+
+      <bilibili-wrap :posX="-141" :posY="-75" title="推广" :promoteData="promoteData">
+          <div class="status" slot="status">
             <span>在线人数：1346260</span>|<span>最新投稿：12215</span>
           </div>
-          <div class="ad">
+          <div class="ad" slot="ad">
             <a target="_blank" href="//cm.bilibili.com/cm/api/fees/pc/sync/v2?msg=a%7C30%2Cb%7Cbilibili%2Cc%7C1%2Cd%7C1%2Ce%7CCKAiEAAYkgwgACgAMAM4HkIeMTUwNzE3MTM2NTE1MXExNzJhMThhNjFhMjUwcTg1SJ%2Fip9PuK1IJ5Y2X5Lqs5biCWgnmsZ%2Foi4%2FnnIFiBuS4reWbvWgBcAB4AIABAIgB6wWSAQ0xNTMuMy4xNjkuMTYymgEHZGVmYXVsdKABAKgBALIBIM%2FaEoDhdZhDQNLjJVi1CZXns7G8cY3Tf2kg19l8sLDvugEkaHR0cDovL2d3ZHouYmlsaWdhbWUuY29tLyMhbmV3c2xpc3Qv%2Cf%7Cclick_sync_3%2Cg%7C1%2Ch%7C1%2Ci%7C5248611%2Cj%7C%2Ck%7C1507171366215%2Cl%7C29%2Cm%7C1507171364291%2Cn%7C1%2Co%7C&amp;ts=1507171366215" data-target-url="http://gwdz.biligame.com/#!newslist/">
-              <img src="https://i0.hdslb.com/bfs/sycp/tmaterial/201709/9fad75ff78d0cc10a93d0a2840f94787.jpg" alt="" width="260" height="150" class="pic">
+              <img :src="solveImgUrl('https://i0.hdslb.com/bfs/sycp/tmaterial/201709/9fad75ff78d0cc10a93d0a2840f94787.jpg')" alt="" width="260" height="150" class="pic">
             </a>
           </div>
+      </bilibili-wrap>
+
+      <bilibili-wrap :posX="-141" :posY="-652" title="正在直播" :liveData="liveData">
+
+      </bilibili-wrap>
+
+      <bilibili-wrap :posX="-141" :posY="-780" title="特别推荐" :recommendData="recommendData">
+        <div class="ad" slot="ad">
+          <a target="_blank" href="//cm.bilibili.com/cm/api/fees/pc/sync/v2?msg=a%7C30%2Cb%7Cbilibili%2Cc%7C1%2Cd%7C1%2Ce%7CCKAiEAAYkgwgACgAMAM4HkIeMTUwNzE3MTM2NTE1MXExNzJhMThhNjFhMjUwcTg1SJ%2Fip9PuK1IJ5Y2X5Lqs5biCWgnmsZ%2Foi4%2FnnIFiBuS4reWbvWgBcAB4AIABAIgB6wWSAQ0xNTMuMy4xNjkuMTYymgEHZGVmYXVsdKABAKgBALIBIM%2FaEoDhdZhDQNLjJVi1CZXns7G8cY3Tf2kg19l8sLDvugEkaHR0cDovL2d3ZHouYmlsaWdhbWUuY29tLyMhbmV3c2xpc3Qv%2Cf%7Cclick_sync_3%2Cg%7C1%2Ch%7C1%2Ci%7C5248611%2Cj%7C%2Ck%7C1507171366215%2Cl%7C29%2Cm%7C1507171364291%2Cn%7C1%2Co%7C&amp;ts=1507171366215" data-target-url="http://gwdz.biligame.com/#!newslist/">
+            <img :src="solveImgUrl('http://i0.hdslb.com/bfs/archive/4ac3c3426259a784408bb74a023b3fbc0f8e0f40.jpg@260w_150h.webp')" alt="" width="260" height="150" class="pic">
+          </a>
         </div>
       </bilibili-wrap>
+
     </div>
   </div>
 </template>
@@ -34,31 +46,39 @@
     data () {
       return {
         banner: [],
-        promoteData: []
+        promoteData: [],
+        recommendData: [],
+        liveData: {}
       }
     },
     mounted () {
       this.getBanner()
       this.getPromote()
+      this.getRecommend()
+      this.getLive()
     },
     methods: {
       async getBanner () {
         let {data: {data: res}} = await axios.get(url.banner)
-        this.banner = res.map((item) => {
-          item.pic = solveImgUrl(item.pic)
-          return item
-        })
+        this.banner = res
         console.log('轮播图数据', this.banner)
       },
       async getPromote () {
         let {data: res} = await axios.get(url.promote)
-        res.map((item) => {
-          item.pic = solveImgUrl(item.pic)
-          return item
-        })
         this.promoteData = res
         console.log('推广数据', this.promoteData)
-      }
+      },
+      async getRecommend () {
+        let {data: {list: res}} = await axios.get(url.recommend)
+        this.recommendData = res.slice(0, 5)
+        console.log('底部推荐数据', this.recommendData)
+      },
+      async getLive () {
+        let {data: {data: res}} = await axios.get(url.live)
+        this.liveData = res
+        console.log('直播数据', this.liveData)
+      },
+      solveImgUrl
     },
     components: {
       BilibiliBanner,

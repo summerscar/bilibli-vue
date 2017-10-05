@@ -3,7 +3,7 @@
     <div class="warp" ref="warp" :style="{transition: 'left '+ animateDelay +'ms', left: (-width) * Bindex + 'px'}">
       <div class="item" v-for="item in dataArr">
         <a :href="item.url" target="_blank">
-          <img ref="image" width="440" height="220" :src="item.pic">
+          <img ref="image" width="440" height="220" :src="solveImgUrl(item.pic)">
         </a>
       </div>
     </div>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+  import {solveImgUrl} from '@/common/js/utils'
+
   export default {
     name: '',
     props: {
@@ -55,6 +57,7 @@
       }
     },
     methods: {
+      solveImgUrl,
       changeIndex (index) {
         this.Bindex = index
         this.init()

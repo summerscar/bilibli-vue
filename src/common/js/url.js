@@ -6,6 +6,8 @@ export const url = {
   header: host + 'header',
   defaultWord: host + 'defaultWord',
   promote: host + 'promote',
+  live: host + 'live',
+  recommend: host + 'recommend',
   rankDay: 'https://api.imjad.cn/bilibili/v2/?get=rank&type=all&content=0&duration=1&new=true',
   rankThree: 'https://api.imjad.cn/bilibili/v2/?get=rank&type=all&content=0&duration=3&new=true',
   rankWeek: 'https://api.imjad.cn/bilibili/v2/?get=rank&type=all&content=0&duration=7&new=true'
