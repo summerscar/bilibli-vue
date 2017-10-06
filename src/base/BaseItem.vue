@@ -10,8 +10,8 @@
       </div>
       <div class="title">{{item.title}}
         <div class="detail">
-          <span class="view"><span class="icon"></span> {{ item.stat.view > 9999 ? num2Wan(item.stat.view) : item.stat.view}}</span>
-          <span class="danmaku"><span class="icon"></span> {{item.stat.danmaku}}</span>
+          <span class="view"><span class="icon"></span> {{num2Wan(item.stat.view)}}</span>
+          <span class="danmaku"><span class="icon"></span> {{num2Wan(item.stat.danmaku)}}</span>
         </div>
       </div>
     </a>

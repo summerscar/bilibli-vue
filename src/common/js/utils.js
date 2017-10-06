@@ -32,6 +32,9 @@ const sec2Time = (time) => {
 }
 
 const num2Wan = (num) => {
+  if (num < 10000) {
+    return num
+  }
   let wan = (num / 10000) | 0
   let thousand = ((num - wan * 10000) / 1000) | 0
   return `${wan}.${thousand}万`

@@ -15,11 +15,12 @@
     <div class="wrap">
       <div class="wrapAll" :style="{left: (-100*index)+'%'}">
         <div class="rank">
-          <div class="rankItem" v-for="(item, index) in rankData" :key="index">
+          <div class="rankItem" v-for="(item, index) in rankData" :key="index" @mouseover="showDetail($event, item)" @mouseleave="itemLeave">
             <div class="rankIndex" :class="{rankTop: index+1 < 4 }">{{index + 1}}</div>
-            <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank">
+            <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" :title="item.title" target="_blank">
               <div class="imgWrap" v-if="index === 0">
-                <img :src="solveImgUrl(item.pic)" width="80" height="50">
+                <img v-lazy="solveImgUrl(item.pic)" width="80" height="50">
+                <div class="looklater"></div>
               </div>
               <div class="detail">
                 <div :class="{lineOne: index !== 0}">{{item.title}}</div>
@@ -28,12 +29,14 @@
             </a>
           </div>
         </div>
+
         <div class="rank">
-          <div class="rankItem" v-for="(item, index) in rankData" :key="index">
+          <div class="rankItem" v-for="(item, index) in rankData" :key="index" @mouseover="showDetail($event, item)" @mouseleave="itemLeave">
             <div class="rankIndex" :class="{rankTop: index+1 < 4 }">{{index + 1}}</div>
-            <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank">
+            <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" :title="item.title" target="_blank">
               <div class="imgWrap" v-if="index === 0">
-                <img :src="solveImgUrl(item.pic)" width="80" height="50">
+                <img v-lazy="solveImgUrl(item.pic)" width="80" height="50">
+                <div class="looklater"></div>
               </div>
               <div class="detail">
                 <div :class="{lineOne: index !== 0}">{{item.title}}</div>
@@ -67,6 +70,19 @@
       }
     },
     methods: {
+      getPosition (dom) {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+        let x = dom.getBoundingClientRect().x
+        let y = scrollTop + dom.getBoundingClientRect().y
+        return {x: x, y: y}
+      },
+      itemLeave () {
+        this.$emit('itemLeave')
+      },
+      showDetail (e, item) {
+        let posObj = this.getPosition(e.currentTarget)
+        this.$emit('itemHover', {data: item, position: posObj})
+      },
       timeChange () {
         this.switchIndex = this.switchIndex === 1 ? 0 : 1
         this.$emit('timeChange', this.switchIndex)
@@ -219,8 +235,35 @@
                 width: 80px;
                 height: 50px;
                 padding-right: 4px;
+                position: relative;
                 img {
                   border-radius: 5px;
+                }
+                div.looklater {
+                  width: 22px;
+                  height: 22px;
+                  position: absolute;
+                  right: 6px;
+                  bottom: 4px;
+                  cursor: pointer;
+                  display: none;
+                  background-image: url(//s1.hdslb.com/bfs/static/webssr/home/images/watchlater-1.png);
+                  &:hover:after {
+                    display: block;
+                  }
+                  &:after {
+                    content: '稍后再看';
+                    background-color: black;
+                    font-size: 12px;
+                    color: #ffffff;
+                    padding: 3px 5px;
+                    position: absolute;
+                    left: -75%;
+                    top: -27px;
+                    display: none;
+                    border-radius: 5px;
+                    width: 50px;
+                  }
                 }
               }
               div.detail {
@@ -243,6 +286,9 @@
                 }
               }
               &:hover {
+                div.looklater {
+                  display: block!important;
+                }
                 div {
                   color: $hoverBlue;
                 }

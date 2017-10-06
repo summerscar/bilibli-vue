@@ -29,10 +29,11 @@
       <!--底部推荐右侧广告-->
       <recommend-ad v-if="recommendData.length"></recommend-ad>
       <!--推广右侧广告-->
-      <promote-ad v-if="promoteData.length" :promoteAd="promoteAd"></promote-ad>
+      <promote-ad v-if="promoteAd" :promoteAd="promoteAd"></promote-ad>
       <!--各分区右侧排行数据-->
       <base-rank :rankData="rankData" v-if="rankData.length"
-                 @typeChange="typeChange" @timeChange="timeChange"></base-rank>
+                 @typeChange="typeChange" @timeChange="timeChange"
+                 @itemHover="itemHover" @itemLeave="itemLeave"></base-rank>
 
     </div>
 
@@ -116,6 +117,12 @@
       BaseRank
     },
     methods: {
+      itemLeave () {
+        this.$emit('itemLeave')
+      },
+      itemHover (obj) {
+        this.$emit('itemHover', obj)
+      },
       typeChange (index) {
         this.$emit('typeChange', {index: index, type: this.zoneType})
       },
