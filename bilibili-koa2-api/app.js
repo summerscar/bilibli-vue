@@ -18,6 +18,7 @@ const menuData = require('./routes/menuData')
 const recommend = require('./routes/recommend')
 const allData = require('./routes/allData')
 const live = require('./routes/live')
+const timeLine = require('./routes/timeLine')
 
 // error handler
 onerror(app)
@@ -56,5 +57,6 @@ app.use(menuData.routes(), menuData.allowedMethods())
 app.use(recommend.routes(), recommend.allowedMethods())
 app.use(allData.routes(), allData.allowedMethods())
 app.use(live.routes(), live.allowedMethods())
+app.use(timeLine.routes(), timeLine.allowedMethods())
 
 module.exports = app

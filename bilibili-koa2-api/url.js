@@ -12,9 +12,10 @@ const banner = 'http://api.bilibili.com/x/web-show/res/loc?jsonp=jsonp&pf=0&id=2
 //  搜索词
 const defaultWord = 'http://www.bilibili.com/widget/getSearchDefaultWords'
 
-//  第二行推广与每分区标题右侧小字推广
+//  第二行推广以及广告与每分区标题右侧小字推广
 const promote = {
   default: 'https://api.bilibili.com/x/web-show/res/locs?pf=0&jsonp=jsonp&ids=23%2C34%2C29%2C31%2C40%2C42%2C44&_=1507105984369',
+  ad: 'http://api.bilibili.com/x/web-show/res/loc?pf=0&id=29',
   hot: 'https://api.bilibili.com/x/web-show/res/locs?pf=0&jsonp=jsonp&ids=1550%2C1554%2C1556%2C1919%2C1558%2C1560%2C1562%2C1624%2C1564%2C1566%2C1568%2C1636%2C1570%2C1572%2C1574&_=1507086097872'
 }
 
@@ -30,4 +31,10 @@ const AllData = 'https://api.bilibili.com/x/web-interface/dynamic/index?jsonp=js
 //  直播数据
 const live = 'http://api.live.bilibili.com/bili/recom'
 
-module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live}
+//  动画时间线
+const timeLine = {
+  jp: 'https://bangumi.bilibili.com/jsonp/timeline_v2_global.ver?type=jsonp&_=1507086097896',
+  zh: 'https://bangumi.bilibili.com/jsonp/timeline_v2_cn.ver?callback=gc_timeline&type=jsonp&_=1507086097899'
+}
+
+module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine}

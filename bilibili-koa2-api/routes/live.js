@@ -4,7 +4,7 @@ const {live} = require('../url')
 
 router.get('/live', async (ctx, next) => {
   let res = await request(live)
-  let result = res.substr(1).substr(0, res.length - 3)
+  let result = res.slice(1, -2)
   ctx.body = result
 })
 

@@ -29,9 +29,10 @@
       <!--底部推荐右侧广告-->
       <recommend-ad v-if="recommendData.length"></recommend-ad>
       <!--推广右侧广告-->
-      <promote-ad v-if="promoteData.length"></promote-ad>
+      <promote-ad v-if="promoteData.length" :promoteAd="promoteAd"></promote-ad>
       <!--各分区右侧排行数据-->
-      <base-rank :rankData="rankData" v-if="rankData.length" @typeChange="showType($event, 1)"></base-rank>
+      <base-rank :rankData="rankData" v-if="rankData.length"
+                 @typeChange="typeChange" @timeChange="timeChange"></base-rank>
 
     </div>
 
@@ -55,10 +56,20 @@
         type: String,
         default: 'Title'
       },
+      zoneType: {
+        type: Number,
+        default: 0
+      },
       promoteData: {
         type: Array,
         default: function () {
           return []
+        }
+      },
+      promoteAd: {
+        type: Object,
+        default: function () {
+          return null
         }
       },
       recommendData: {
@@ -105,8 +116,11 @@
       BaseRank
     },
     methods: {
-      showType (index, type) {
-        console.log('时间index', index, '类别', type)
+      typeChange (index) {
+        this.$emit('typeChange', {index: index, type: this.zoneType})
+      },
+      timeChange (index) {
+        this.$emit('timeChange', {index: index, type: this.zoneType})
       }
     }
   }

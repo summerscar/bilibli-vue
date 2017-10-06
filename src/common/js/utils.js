@@ -37,5 +37,9 @@ const num2Wan = (num) => {
   return `${wan}.${thousand}万`
 }
 
-export {throttle, solveImgUrl, rdNum, sec2Time, num2Wan}
+const num2999 = (num) => {
+  return num > 999 ? '999+' : num
+}
+
+export {throttle, solveImgUrl, rdNum, sec2Time, num2Wan, num2999}
 

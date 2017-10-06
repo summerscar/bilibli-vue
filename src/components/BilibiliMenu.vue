@@ -10,7 +10,7 @@
         </li>
         <li @mouseover="showdonghua" @mouseleave="hidedonghua">
           <a>
-            <div class="status">999+</div>
+            <div class="status">{{num2999(menuData[1])}}</div>
             <div class="title">动画</div>
           </a>
           <menu-slide ref="donghua">
@@ -22,7 +22,7 @@
         </li>
         <li @mouseover="showfanju" @mouseleave="hidefanju">
           <a>
-            <div class="status">93</div>
+            <div class="status">{{num2999(menuData[13])}}</div>
             <div class="title">番剧</div>
           </a>
           <menu-slide ref="fanju">
@@ -36,7 +36,7 @@
         </li>
         <li @mouseover="showguochuang" @mouseleave="hideguochuang">
           <a>
-            <div class="status">98</div>
+            <div class="status">{{num2999(menuData[165])}}</div>
             <div class="title">国创</div>
           </a>
           <menu-slide ref="guochuang">
@@ -50,7 +50,7 @@
         </li>
         <li @mouseover="showyinyue" @mouseleave="hideyinyue">
           <a>
-            <div class="status">999+</div>
+            <div class="status">{{num2999(menuData[3])}}</div>
             <div class="title">音乐</div>
           </a>
           <menu-slide ref="yinyue">
@@ -65,7 +65,7 @@
         </li>
         <li @mouseover="showwudao" @mouseleave="hidewudao">
           <a>
-            <div class="status">180</div>
+            <div class="status">{{num2999(menuData[129])}}</div>
             <div class="title">舞蹈</div>
           </a>
           <menu-slide ref="wudao">
@@ -76,7 +76,7 @@
         </li>
         <li @mouseover="showyouxi" @mouseleave="hideyouxi">
           <a>
-            <div class="status">999+</div>
+            <div class="status">{{num2999(menuData[4])}}</div>
             <div class="title">游戏</div>
           </a>
           <menu-slide ref="youxi">
@@ -93,7 +93,7 @@
         </li>
         <li @mouseover="showkeji" @mouseleave="hidekeji">
           <a>
-            <div class="status">734</div>
+            <div class="status">{{num2999(menuData[36])}}</div>
             <div class="title">科技</div>
           </a>
           <menu-slide ref="keji">
@@ -109,7 +109,7 @@
         </li>
         <li @mouseover="showshenghuo" @mouseleave="hideshenghuo">
           <a>
-            <div class="status">999+</div>
+            <div class="status">{{num2999(menuData[160])}}</div>
             <div class="title">生活</div>
           </a>
           <menu-slide ref="shenghuo">
@@ -126,7 +126,7 @@
         </li>
         <li @mouseover="showguichu" @mouseleave="hideguichu">
           <a>
-            <div class="status">98</div>
+            <div class="status">{{num2999(menuData[119])}}</div>
             <div class="title">鬼畜</div>
           </a>
           <menu-slide ref="guichu">
@@ -138,7 +138,7 @@
         </li>
         <li @mouseover="showshishang" @mouseleave="hideshishang">
           <a>
-            <div class="status">354</div>
+            <div class="status">{{num2999(menuData[155])}}</div>
             <div class="title">时尚</div>
           </a>
           <menu-slide ref="shishang">
@@ -150,14 +150,14 @@
         </li>
         <li @mouseover="showguanggao" @mouseleave="hideguanggao">
           <a>
-            <div class="status">98</div>
+            <div class="status">{{num2999(menuData[165])}}</div>
             <div class="title">广告</div>
           </a>
           <menu-slide ref="guanggao"></menu-slide>
         </li>
         <li @mouseover="showyule" @mouseleave="hideyule">
           <a>
-            <div class="status">999+</div>
+            <div class="status">{{num2999(menuData[5])}}</div>
             <div class="title">娱乐</div>
           </a>
           <menu-slide ref="yule">
@@ -168,7 +168,7 @@
         </li>
         <li @mouseover="showyingshi" @mouseleave="hideyingshi">
           <a>
-            <div class="status">999+</div>
+            <div class="status">{{num2999(menuData[23]+menuData[11])}}</div>
             <div class="title">影视</div>
           </a>
           <menu-slide ref="yingshi">
@@ -211,13 +211,31 @@
 </template>
 
 <script>
+  import {url} from '@/common/js/url'
+  import {num2999} from '@/common/js/utils'
   import MenuSlide from '@/base/MenuSlide'
+  import axios from 'axios'
+
   export default {
     name: '',
+    data () {
+      return {
+        menuData: {}
+      }
+    },
     components: {
       MenuSlide
     },
+    mounted () {
+      this.getMenuData()
+    },
     methods: {
+      num2999,
+      async getMenuData () {
+        let {data: {data: {region_count: res}}} = await axios.get(url.menuData)
+        this.menuData = res
+        console.log('菜单数据', this.menuData)
+      },
       showdonghua () {
         this.$refs.donghua.show()
       },

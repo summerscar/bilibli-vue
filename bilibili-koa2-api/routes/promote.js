@@ -14,4 +14,9 @@ router.get('/hot', async (ctx, next) => {
   ctx.body = res
 })
 
+router.get('/ad', async (ctx, next) => {
+  let res = await request(promote.ad)
+  ctx.body = res
+})
+
 module.exports = router

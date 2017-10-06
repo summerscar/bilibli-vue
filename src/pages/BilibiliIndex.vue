@@ -6,14 +6,17 @@
     </div>
     <div class="main_body">
 
-      <bilibili-wrap :posX="-141" :posY="-75" title="推广" :promoteData="promoteData"></bilibili-wrap>
+      <bilibili-wrap :posX="-141" :posY="-75" title="推广" :promoteData="promoteData" :promoteAd="promoteAd"></bilibili-wrap>
 
       <bilibili-wrap :posX="-141" :posY="-652" title="正在直播" :liveData="liveData"></bilibili-wrap>
 
-     <!-- <bilibili-wrap :posX="-141" :posY="-908" title="动画" :zoneData="allData[1]" :rankData="zoneRank[1]"></bilibili-wrap>-->
+<!--
+      <bilibili-wrap :posX="-141" :posY="-908" :zoneType="1" title="动画" :zoneData="allData[1]" :rankData="zoneRank[1]"></bilibili-wrap>
+-->
       <bilibili-wrap v-for="(item, index) in zoneOrigin" :posX="-141" :posY="-908"
                      :title="zoneMap[item]" :zoneData="allData[item]"
-                     :rankData="zoneRank[item]" :key="index">
+                     :rankData="zoneRank[item]" :zoneType="item" :key="index"
+                     @typeChange="showTypeChange" @timeChange="showTimeChange">
 
       </bilibili-wrap>
 
@@ -37,6 +40,7 @@
       return {
         banner: [],
         promoteData: [],
+        promoteAd: {},
         recommendData: [],
         liveData: {},
         allData: {},
@@ -63,12 +67,19 @@
     mounted () {
       this.getBanner()
       this.getPromote()
+      this.getPromoteAd()
       this.getRecommend()
       this.getLive()
       this.getAllData()
       this.getZoneRank()
     },
     methods: {
+      showTypeChange (data) {
+        console.log('类型切换', data.index, '类别', this.zoneMap[data.type])
+      },
+      showTimeChange (data) {
+        console.log('时间切换', data.index, '类别', this.zoneMap[data.type])
+      },
       async getBanner () {
         let {data: {data: res}} = await axios.get(url.banner)
         this.banner = res
@@ -78,6 +89,11 @@
         let {data: res} = await axios.get(url.promote)
         this.promoteData = res
         console.log('推广数据', this.promoteData)
+      },
+      async getPromoteAd () {
+        let {data: {data: [res]}} = await axios.get(url.promoteAd)
+        this.promoteAd = res
+        console.log('推广广告数据', this.promoteAd)
       },
       async getRecommend () {
         let {data: {list: res}} = await axios.get(url.recommend)
