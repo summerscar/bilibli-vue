@@ -1,23 +1,17 @@
 <template>
-  <div class="liveItem" v-if="item">
-    <a :href="item.link" target="_blank">
-      <img :src="solveImgUrl(item.pic)" width="160" height="100">
+  <div class="baseItem" v-if="item">
+    <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank">
+      <img v-lazy="solveImgUrl(item.pic)" width="160" height="100">
       <div class="mask">
         <div class="detail">
-          <div class="avatar">
-            <img :src="solveImgUrl(item.face)" width="48" height="48">
-          </div>
-          <div class="status">
-            <span class="dot"></span>
-            <span>Live</span>
-          </div>
+          <div class="play">{{sec2Time(item.duration)}}</div>
         </div>
+        <div class="looklater"></div>
       </div>
-      <div class="type">{{item.areaName}}</div>
       <div class="title">{{item.title}}
         <div class="detail">
-          <span class="uname"><span class="icon"></span> {{item.uname}}</span>
-          <span class="online"><span class="icon"></span> {{item.online}}</span>
+          <span class="view"><span class="icon"></span> {{ item.stat.view > 9999 ? num2Wan(item.stat.view) : item.stat.view}}</span>
+          <span class="danmaku"><span class="icon"></span> {{item.stat.danmaku}}</span>
         </div>
       </div>
     </a>
@@ -25,7 +19,7 @@
 </template>
 
 <script>
-  import {sec2Time, solveImgUrl} from '@/common/js/utils'
+  import {sec2Time, solveImgUrl, num2Wan} from '@/common/js/utils'
 
   export default {
     name: '',
@@ -41,7 +35,8 @@
     },
     methods: {
       sec2Time,
-      solveImgUrl
+      solveImgUrl,
+      num2Wan
     }
   }
 </script>
@@ -49,7 +44,7 @@
 <style lang="scss" scoped>
   @import "../common/style/variable";
 
-  div.liveItem {
+  div.baseItem {
     width: 160px;
     height: 148px;
     position: relative;
@@ -73,41 +68,41 @@
         opacity: 0;
         transition: all 0.4s;
         div.detail {
-          div.avatar {
-            height: 48px;
-            width: 48px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-125%, -50%);
-            img {
-              border-radius: 50%;
-            }
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          line-height: 18px;
+          font-size: 12px;
+          box-sizing: border-box;
+          color: white;
+          padding-left: 8px;
+          padding-bottom: 2px;
+          opacity: 0;
+          transition: all 0.4s;
+        }
+        div.looklater {
+          width: 22px;
+          height: 22px;
+          position: absolute;
+          right: 6px;
+          bottom: 4px;
+          cursor: pointer;
+          background-image: url(//s1.hdslb.com/bfs/static/webssr/home/images/watchlater-1.png);
+          &:hover:after {
+            display: block;
           }
-          div.status {
-            height: 20px;
-            border-radius: 20px;
-            background-color: #00a1d6;
-            color: #ffffff;
+          &:after {
+            content: '稍后再看';
+            background-color: black;
             font-size: 12px;
-            line-height: 20px;
+            color: #ffffff;
+            padding: 3px 5px;
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(0, -50%);
-            padding-right: 7px;
-            span {
-              display: inline-block;
-              vertical-align: top;
-            }
-            span.dot {
-              margin: 7px;
-              display: inline-block;
-              width: 6px;
-              height: 6px;
-              border-radius: 50%;
-              background-color: #ffffff;
-            }
+            left: -75%;
+            top: -27px;
+            display: none;
+            border-radius: 5px;
+            width: 50px;
           }
         }
       }
@@ -147,7 +142,7 @@
             position: relative;
             top:-1px;
           }
-          span.uname {
+          span.view {
             color: $fontDark;
             display: inline-block;
             width: 85px;
@@ -157,16 +152,16 @@
             vertical-align: top;
             span {
               background-image: url(//s1.hdslb.com/bfs/static/webssr/home/images/icons.png);
-              background-position: -282px -154px;
+              background-position: -282px -90px;
             }
           }
-          span.online {
+          span.danmaku {
             color: $fontDark;
             display: inline-block;
             vertical-align: top;
             span {
-              background-image: url(//s1.hdslb.com/bfs/static/webssr/home/images/live-eye.png);
-              background-position: 0 0;
+              background-image: url(//s1.hdslb.com/bfs/static/webssr/home/images/icons.png);
+              background-position: -282px -218px;
             }
           }
         }

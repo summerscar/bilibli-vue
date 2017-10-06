@@ -1,9 +1,9 @@
 <template>
   <div class="recommendItem" v-if="item">
     <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank">
-      <img :src="solveImgUrl(item.pic)" width="160" height="100">
+      <img v-lazy="solveImgUrl(item.pic)" width="160" height="100">
       <div class="userInfo">
-        <div class="avatar" :style="{backgroundImage: 'url(' + solveImgUrl(item.last_recommend[0].face)+ ')'}">
+        <div class="avatar" v-lazy:background-image="solveImgUrl(item.last_recommend[0].face)">
         </div>
         <div class="detail">
           <div>{{item.author}}</div>

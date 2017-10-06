@@ -1,21 +1,13 @@
-# bilibili-vue
+# 挖个坑，一周写个bilibili
 
-> A Vue.js project
+> 之前就曾有这想法，前阵子看到了[这个repo](https://github.com/lybenson/bilibili-vue),于是下决心有时间自己也从零开始写一个
 
-## Build Setup
+## 每天的更新记录
 
-``` bash
-# install dependencies
-npm install
+[博客地址](http://summerscar.me/2017/10/01/%E5%9B%BD%E5%BA%86%E6%8C%96%E4%B8%AA%E5%9D%91%E7%94%A8vue%E5%86%99%E4%B8%AAbilibili/)
 
-# serve with hot reload at localhost:8080
-npm run dev
+## TODO
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+- [ ] 一周时间先写个首页出来
+- [ ] 2~3天完成视频的播放页
+- [ ] 2~3天完成个人空间页面

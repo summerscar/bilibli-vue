@@ -1,7 +1,8 @@
 <template>
   <div class="bilibiliWrap">
+    <!--左侧-->
     <div class="wrapLeft">
-      <bilibili-title :posX="posX" :posY="posY" :title="title"></bilibili-title>
+      <bilibili-title :posX="posX" :posY="posY" :title="title" :showSwitch="!!zoneData.length"></bilibili-title>
       <!--推广-->
       <div class="videoWarp" v-if="promoteData.length">
         <promote-item v-for="(item, index) in promoteData" :key="index" :item="item"></promote-item>
@@ -14,28 +15,39 @@
       <div class="videoWarp" v-if="liveData">
         <live-item v-for="(item, index) in liveData.recommend" :key="index" :item="item"></live-item>
       </div>
-
-    </div>
-    <div class="wrapRight">
-      <!--直播排行榜-->
-      <live-rank v-if="liveData" :liveRankData="liveData.ranking"></live-rank>
-
-      <div class="statusWarp" v-if="promoteData.length || recommendData.length">
-        <slot name="status"></slot>
+      <!--各大分区-->
+      <div class="videoWarp" v-if="zoneData">
+        <base-item v-for="(item, index) in zoneData" :key="index" :item="item"></base-item>
       </div>
 
-      <slot name="ad"></slot>
+    </div>
+
+    <!--右侧-->
+    <div class="wrapRight">
+      <!--直播排行榜-->
+      <live-rank v-if="liveData" :liveRankData="liveData.ranking" :preview="liveData.preview"></live-rank>
+      <!--底部推荐右侧广告-->
+      <recommend-ad v-if="recommendData.length"></recommend-ad>
+      <!--推广右侧广告-->
+      <promote-ad v-if="promoteData.length"></promote-ad>
+      <!--各分区右侧排行数据-->
+      <base-rank :rankData="rankData" v-if="rankData.length" @typeChange="showType($event, 1)"></base-rank>
 
     </div>
+
   </div>
 </template>
 
 <script>
   import BilibiliTitle from '@/base/BilibiliTitle'
   import PromoteItem from '@/base/PromoteItem'
+  import PromoteAd from '@/base/PromoteAd'
   import RecommendItem from '@/base/RecommendItem'
+  import RecommendAd from '@/base/RecommendAd'
   import LiveItem from '@/base/LiveItem'
   import LiveRank from '@/base/LiveRank'
+  import BaseItem from '@/base/BaseItem'
+  import BaseRank from '@/base/BaseRank'
 
   export default {
     props: {
@@ -59,6 +71,18 @@
         type: Object,
         default: null
       },
+      zoneData: {
+        type: Array,
+        default: function () {
+          return []
+        }
+      },
+      rankData: {
+        type: Array,
+        default: function () {
+          return []
+        }
+      },
       posX: {
         type: Number,
         default: 0
@@ -72,9 +96,18 @@
     components: {
       BilibiliTitle,
       PromoteItem,
+      PromoteAd,
       RecommendItem,
+      RecommendAd,
       LiveItem,
-      LiveRank
+      LiveRank,
+      BaseItem,
+      BaseRank
+    },
+    methods: {
+      showType (index, type) {
+        console.log('时间index', index, '类别', type)
+      }
     }
   }
 </script>
@@ -102,30 +135,6 @@
       img {
         border-radius: 5px;
       }
-      div.statusWarp {
-        height: 34px;
-        width: 100%;
-        margin-bottom: 10px;
-
-        div.status {
-          height: 34px;
-          width: 100%;
-          font-size: 12px;
-          background-color: $fontGrey;
-          color: $fontDark;
-          padding: 9px 5px;
-          text-align: center;
-          border-radius: 5px;
-          display: flex;
-          justify-content: space-around;
-          box-sizing: border-box;
-
-          span {
-            display: block;
-          }
-        }
-      }
-
     }
   }
 </style>

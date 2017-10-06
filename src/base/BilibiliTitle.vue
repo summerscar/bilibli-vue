@@ -3,6 +3,12 @@
     <span class="BlibiliIcon" :style="{backgroundPosition: posX+'px '+posY+'px'}"></span>
     <span class="title"><a href="">{{title}}</a></span>
     <span class="status"></span>
+    <div class="switch" v-if="showSwitch">
+      <ul>
+        <li @click="changeIndex(0)" :class="{active: index === 0}">有新动态</li>
+        <li @click="changeIndex(1)" :class="{active: index === 1}">最新投稿</li>
+      </ul>
+    </div>
     <span class="promote">客官，请问您要来点表情包吗？</span>
     <div class="nowStatus">
       <button class="status"><span class="statusIcon"></span><b>18745</b>条新动态</button>
@@ -15,6 +21,10 @@
   export default {
     name: '',
     props: {
+      showSwitch: {
+        type: Boolean,
+        default: false
+      },
       title: {
         type: String,
         default: 'Title'
@@ -27,12 +37,40 @@
         type: Number,
         default: 0
       }
+    },
+    data () {
+      return {
+        index: 0
+      }
+    },
+    methods: {
+      changeIndex (index) {
+        this.index = index
+        this.$emit('change', index)
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
   @import "../common/style/variable";
+
+  .active {
+    color: $hoverBlue;
+    border-bottom: 1px solid $hoverBlue!important;
+    &:after {
+      content: ' ';
+      width: 0;
+      height: 0;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+      border-bottom: 3px solid $hoverBlue;
+      transform: translateX(-50%);
+    }
+  }
 
   div.BilibiliTitle {
     padding-bottom: 15px;
@@ -45,15 +83,38 @@
       background-image: url(http://static.hdslb.com/images/base/icons.png);
       top:4px;
     }
+    div.switch {
+      display: inline-block;
+      ul {
+        display: flex;
+        padding-left: 10px;
+        li {
+          position: relative;
+          font-size: 12px;
+          margin: 0 10px;
+          line-height: 20px;
+          padding-bottom: 2px;
+          border-bottom: 1px solid transparent;
+          cursor: pointer;
+        }
+      }
+    }
     span.title {
       vertical-align: bottom;
       font-size: 24px;
       line-height: 24px;
+      a {
+        display: inline-block;
+        vertical-align: bottom;
+      }
     }
     span.promote {
       font-size: 12px;
       color: $fontDarker;
       padding-left: 40px;
+      vertical-align: bottom;
+      padding-bottom: 5px;
+      display: inline-block;
     }
     div.nowStatus {
       margin-top: 10px;

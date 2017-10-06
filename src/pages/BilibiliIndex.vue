@@ -4,30 +4,20 @@
       <bilibili-banner :dataArr="banner" :delay="4000" class="banner"></bilibili-banner>
       <bilibili-rank></bilibili-rank>
     </div>
-    <div class="promote">
+    <div class="main_body">
 
-      <bilibili-wrap :posX="-141" :posY="-75" title="推广" :promoteData="promoteData">
-          <div class="status" slot="status">
-            <span>在线人数：1346260</span>|<span>最新投稿：12215</span>
-          </div>
-          <div class="ad" slot="ad">
-            <a target="_blank" href="//cm.bilibili.com/cm/api/fees/pc/sync/v2?msg=a%7C30%2Cb%7Cbilibili%2Cc%7C1%2Cd%7C1%2Ce%7CCKAiEAAYkgwgACgAMAM4HkIeMTUwNzE3MTM2NTE1MXExNzJhMThhNjFhMjUwcTg1SJ%2Fip9PuK1IJ5Y2X5Lqs5biCWgnmsZ%2Foi4%2FnnIFiBuS4reWbvWgBcAB4AIABAIgB6wWSAQ0xNTMuMy4xNjkuMTYymgEHZGVmYXVsdKABAKgBALIBIM%2FaEoDhdZhDQNLjJVi1CZXns7G8cY3Tf2kg19l8sLDvugEkaHR0cDovL2d3ZHouYmlsaWdhbWUuY29tLyMhbmV3c2xpc3Qv%2Cf%7Cclick_sync_3%2Cg%7C1%2Ch%7C1%2Ci%7C5248611%2Cj%7C%2Ck%7C1507171366215%2Cl%7C29%2Cm%7C1507171364291%2Cn%7C1%2Co%7C&amp;ts=1507171366215" data-target-url="http://gwdz.biligame.com/#!newslist/">
-              <img :src="solveImgUrl('https://i0.hdslb.com/bfs/sycp/tmaterial/201709/9fad75ff78d0cc10a93d0a2840f94787.jpg')" alt="" width="260" height="150" class="pic">
-            </a>
-          </div>
-      </bilibili-wrap>
+      <bilibili-wrap :posX="-141" :posY="-75" title="推广" :promoteData="promoteData"></bilibili-wrap>
 
-      <bilibili-wrap :posX="-141" :posY="-652" title="正在直播" :liveData="liveData">
+      <bilibili-wrap :posX="-141" :posY="-652" title="正在直播" :liveData="liveData"></bilibili-wrap>
+
+     <!-- <bilibili-wrap :posX="-141" :posY="-908" title="动画" :zoneData="allData[1]" :rankData="zoneRank[1]"></bilibili-wrap>-->
+      <bilibili-wrap v-for="(item, index) in zoneOrigin" :posX="-141" :posY="-908"
+                     :title="zoneMap[item]" :zoneData="allData[item]"
+                     :rankData="zoneRank[item]" :key="index">
 
       </bilibili-wrap>
 
-      <bilibili-wrap :posX="-141" :posY="-780" title="特别推荐" :recommendData="recommendData">
-        <div class="ad" slot="ad">
-          <a target="_blank" href="//cm.bilibili.com/cm/api/fees/pc/sync/v2?msg=a%7C30%2Cb%7Cbilibili%2Cc%7C1%2Cd%7C1%2Ce%7CCKAiEAAYkgwgACgAMAM4HkIeMTUwNzE3MTM2NTE1MXExNzJhMThhNjFhMjUwcTg1SJ%2Fip9PuK1IJ5Y2X5Lqs5biCWgnmsZ%2Foi4%2FnnIFiBuS4reWbvWgBcAB4AIABAIgB6wWSAQ0xNTMuMy4xNjkuMTYymgEHZGVmYXVsdKABAKgBALIBIM%2FaEoDhdZhDQNLjJVi1CZXns7G8cY3Tf2kg19l8sLDvugEkaHR0cDovL2d3ZHouYmlsaWdhbWUuY29tLyMhbmV3c2xpc3Qv%2Cf%7Cclick_sync_3%2Cg%7C1%2Ch%7C1%2Ci%7C5248611%2Cj%7C%2Ck%7C1507171366215%2Cl%7C29%2Cm%7C1507171364291%2Cn%7C1%2Co%7C&amp;ts=1507171366215" data-target-url="http://gwdz.biligame.com/#!newslist/">
-            <img :src="solveImgUrl('http://i0.hdslb.com/bfs/archive/4ac3c3426259a784408bb74a023b3fbc0f8e0f40.jpg@260w_150h.webp')" alt="" width="260" height="150" class="pic">
-          </a>
-        </div>
-      </bilibili-wrap>
+      <bilibili-wrap :posX="-141" :posY="-780" title="特别推荐" :recommendData="recommendData"></bilibili-wrap>
 
     </div>
   </div>
@@ -48,7 +38,26 @@
         banner: [],
         promoteData: [],
         recommendData: [],
-        liveData: {}
+        liveData: {},
+        allData: {},
+        zoneRank: {},
+        zoneOrigin: [1, 3, 4, 5, 11, 13, 23, 36, 119, 129, 155, 160, 165, 168],
+        zoneMap: {
+          1: '动画',
+          3: '音乐',
+          4: '游戏',
+          5: '娱乐',
+          11: '电视剧',
+          13: '番剧动态',
+          23: '电影',
+          36: '科技',
+          119: '鬼畜',
+          129: '舞蹈',
+          155: '时尚',
+          160: '生活',
+          165: '广告',
+          168: '国创相关'
+        }
       }
     },
     mounted () {
@@ -56,6 +65,8 @@
       this.getPromote()
       this.getRecommend()
       this.getLive()
+      this.getAllData()
+      this.getZoneRank()
     },
     methods: {
       async getBanner () {
@@ -77,6 +88,20 @@
         let {data: {data: res}} = await axios.get(url.live)
         this.liveData = res
         console.log('直播数据', this.liveData)
+      },
+      async getAllData () {
+        let {data: {data: res}} = await axios.get(url.allData)
+        this.allData = res
+        console.log('各分区数据', this.allData)
+      },
+      async getZoneRank () {
+        let tmpObj = {}
+        for (let i = 0; i < this.zoneOrigin.length; i++) {
+          let {data: {rank: {list: res}}} = await axios.get(url.zoneRank + '&type=all&content=' + this.zoneOrigin[i] + '&duration=3')
+          tmpObj[this.zoneOrigin[i]] = res.splice(0, 7)
+        }
+        this.zoneRank = tmpObj
+        console.log('各分区排行数据', this.zoneRank)
       },
       solveImgUrl
     },

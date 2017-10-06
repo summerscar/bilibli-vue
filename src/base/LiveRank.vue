@@ -2,9 +2,9 @@
   <div class="liveRank">
     <div class="header">
       <ul>
-        <li @mouseover="index = 0" :class="{active: index === 0}">直播排行</li>
-        <li @mouseover="index = 1" :class="{active: index === 1}">关注的主播</li>
-        <li @mouseover="index = 2" :class="{active: index === 2}">为你推荐</li>
+        <li @click="index = 0" :class="{active: index === 0}">直播排行</li>
+        <li @click="index = 1" :class="{active: index === 1}">关注的主播</li>
+        <li @click="index = 2" :class="{active: index === 2}">为你推荐</li>
       </ul>
     </div>
     <div class="wrap">
@@ -28,26 +28,10 @@
         <div class="recommend">
           <div class="wrap">
             <div class="wrapAll" :style="{left: imgIndex * -260 + 'px'}">
-              <a href="https://live.bilibili.com/pages/1702/mid-autumn-2017.html#/" target="_blank">
-                <img :src="solveImgUrl('https://i0.hdslb.com/bfs/live/3c79d08871993728f16a923c0b5d5cd7ca3da335.png@260w_248h.webp')">
+              <a v-for="(item, index) in preview" :key="index" :href="item.url" target="_blank">
+                <img :src="solveImgUrl(item.pic)">
                 <div class="mask">
-                  <p>中秋，边吃月饼边拿头衔</p>
-                </div>
-              </a>
-              <a href="https://www.bilibili.com/blackboard/lolita.html" target="_blank">
-                <img :src="solveImgUrl('https://i0.hdslb.com/bfs/live/13ca0ac7a8d8bdcc5c44d466ca21e21940973b1a.jpg@260w_248h.webp')">
-                <div class="mask">
-                  <p>
-                    Lolitaの搭配
-                  </p>
-                </div>
-              </a>
-              <a href="https://www.bilibili.com/blackboard/bililive20171001ibendo.html" target="_blank">
-                <img :src="solveImgUrl('https://i0.hdslb.com/bfs/live/674a179390e8d0ac913c9832d48ed0f1d591deea.jpg@260w_248h.webp')">
-                <div class="mask">
-                  <p>
-                    “bilibil漫游全国” 2017国庆特别篇
-                  </p>
+                  <p>{{item.title}}</p>
                 </div>
               </a>
             </div>
@@ -82,11 +66,17 @@
         default: function () {
           return []
         }
+      },
+      preview: {
+        type: Array,
+        default: function () {
+          return []
+        }
       }
     },
     data () {
       return {
-        index: 0,
+        index: 2,
         imgIndex: 0,
         timer: null
       }
