@@ -11,8 +11,8 @@ export const url = {
   recommend: host + 'recommend',
   allData: host + 'allData',
   menuData: host + 'menuData',
-  rankDay: 'https://api.imjad.cn/bilibili/v2/?get=rank&type=all&content=0&duration=1&new=true',
-  rankThree: 'https://api.imjad.cn/bilibili/v2/?get=rank&type=all&content=0&duration=3&new=true',
-  rankWeek: 'https://api.imjad.cn/bilibili/v2/?get=rank&type=all&content=0&duration=7&new=true',
-  zoneRank: 'https://api.imjad.cn/bilibili/v2/?get=rank'
+  zoneRank: host + 'baseRank?get=rank',
+  rankDay: host + 'topRank?time=1',
+  rankThree: host + 'topRank?time=3',
+  rankWeek: host + 'topRank?time=7'
 }

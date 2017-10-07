@@ -11,7 +11,6 @@
 <script>
   import axios from 'axios'
   import {url} from '@/common/js/url'
-  import {rdNum} from '@/common/js/utils'
   import RankItem from '@/base/RankItem'
 
   export default {
@@ -42,35 +41,29 @@
         try {
           if (this.rankIndex % 3 === 0) {
             this.getRankDay()
-            console.log('昨日数据')
+            console.log('昨日数据', this.rankData)
           } else if (this.rankIndex % 3 === 1) {
             this.getRankThree()
-            console.log('三日数据')
+            console.log('三日数据', this.rankData)
           } else {
             this.getRankWeek()
-            console.log('一周数据')
+            console.log('一周数据', this.rankData)
           }
         } catch (e) {
           console.log(e)
         }
       },
       async getRankDay () {
-        let {data: {rank: {list: res}}} = await axios.get(url.rankDay)
-        let rdnum = rdNum(0, 92)
-        let tempArr = res.slice(rdnum, rdnum + 8)
-        this.rankData = tempArr
+        let {data: {data: res}} = await axios.get(url.rankDay)
+        this.rankData = res
       },
       async getRankThree () {
-        let {data: {rank: {list: res}}} = await axios.get(url.rankThree)
-        let rdnum = rdNum(0, 92)
-        let tempArr = res.slice(rdnum, rdnum + 8)
-        this.rankData = tempArr
+        let {data: {data: res}} = await axios.get(url.rankThree)
+        this.rankData = res
       },
       async getRankWeek () {
-        let {data: {rank: {list: res}}} = await axios.get(url.rankWeek)
-        let rdnum = rdNum(0, 92)
-        let tempArr = res.slice(rdnum, rdnum + 8)
-        this.rankData = tempArr
+        let {data: {data: res}} = await axios.get(url.rankWeek)
+        this.rankData = res
       }
     },
     components: {

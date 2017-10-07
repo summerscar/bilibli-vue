@@ -19,6 +19,8 @@ const recommend = require('./routes/recommend')
 const allData = require('./routes/allData')
 const live = require('./routes/live')
 const timeLine = require('./routes/timeLine')
+const baseRank = require('./routes/baseRank')
+const topRank = require('./routes/topRank')
 
 // error handler
 onerror(app)
@@ -58,5 +60,7 @@ app.use(recommend.routes(), recommend.allowedMethods())
 app.use(allData.routes(), allData.allowedMethods())
 app.use(live.routes(), live.allowedMethods())
 app.use(timeLine.routes(), timeLine.allowedMethods())
+app.use(baseRank.routes(), baseRank.allowedMethods())
+app.use(topRank.routes(), topRank.allowedMethods())
 
 module.exports = app

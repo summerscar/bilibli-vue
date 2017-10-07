@@ -1,14 +1,15 @@
 <template>
   <div class="videoDetail" :style="{top:itemHoverData.position.y+'px', left:itemHoverData.position.x + 'px'}">
     <div class="title">{{itemHoverData.data.title}}</div>
-    <div class="author">{{itemHoverData.data.author}}</div>
+    <div class="author">{{itemHoverData.data.author}} | {{itemHoverData.data.create}}</div>
     <div class="desc">
       <img v-lazy="solveImgUrl(itemHoverData.data.pic)" width="100" height="62.5">
+      <div class="description">{{itemHoverData.data.description}}</div>
     </div>
     <div class="info">
       <div><span class="play"></span> {{num2Wan(itemHoverData.data.play)}}</div>
       <div><span class="danmu"></span> {{num2Wan(itemHoverData.data.video_review)}}</div>
-      <div><span class="fav"></span> {{num2Wan(itemHoverData.data.coins)}}</div>
+      <div><span class="fav"></span> {{num2Wan(itemHoverData.data.favorites)}}</div>
       <div><span class="cions"></span> {{num2Wan(itemHoverData.data.coins)}}</div>
     </div>
   </div>
@@ -59,8 +60,16 @@
     div.desc {
       padding: 8px 0;
       border-bottom: 1px solid $fontGrey;
+      display: flex;
       img {
         border-radius: 5px;
+        flex: none;
+      }
+      div.description {
+        color: $fontDark;
+        padding-left: 10px;
+        height: 62px;
+        overflow: hidden;
       }
     }
     div.info {

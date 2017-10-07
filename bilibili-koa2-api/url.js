@@ -23,7 +23,7 @@ const promote = {
 const menuData = 'https://api.bilibili.com/x/web-interface/online?jsonp=jsonp&_=1507086094756'
 
 //  底层推荐
-const recommend = 'https://api.imjad.cn/bilibili/v2/?get=recommend'
+const recommend = 'https://www.bilibili.com/index/recommend.json'
 
 //  各分区数据
 const AllData = 'https://api.bilibili.com/x/web-interface/dynamic/index?jsonp=jsonp&_=1507105986455'
@@ -36,5 +36,13 @@ const timeLine = {
   jp: 'https://bangumi.bilibili.com/jsonp/timeline_v2_global.ver?type=jsonp&_=1507086097896',
   zh: 'https://bangumi.bilibili.com/jsonp/timeline_v2_cn.ver?callback=gc_timeline&type=jsonp&_=1507086097899'
 }
+//  顶部排行
+const topRank = {
+  1: 'https://api.bilibili.com/x/web-interface/ranking/index?jsonp=jsonp&day=1&_=1507396633133',
+  3: 'https://api.bilibili.com/x/web-interface/ranking/index?jsonp=jsonp&day=3&_=1507396633133',
+  7: 'https://api.bilibili.com/x/web-interface/ranking/index?jsonp=jsonp&day=7&_=1507396633133'
+}
+// 各分区右侧排行
+const baseRank = 'https://api.bilibili.com/x/web-interface/ranking/region'
 
-module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine}
+module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine, baseRank, topRank}

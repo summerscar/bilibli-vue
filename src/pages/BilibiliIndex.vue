@@ -159,14 +159,14 @@
       async getZoneRank () {
         let tmpObj = {}
         for (let i = 0; i < this.zoneOrigin.length; i++) {
-          let {data: {rank: {list: res}}} = await axios.get(url.zoneRank + '&type=all&content=' + this.zoneOrigin[i] + '&duration=3')
+          let {data: {data: res}} = await axios.get(url.zoneRank + '&type=all&content=' + this.zoneOrigin[i] + '&duration=3')
           tmpObj[this.zoneOrigin[i]] = res.splice(0, 7)
         }
         this.zoneRank = tmpObj
         console.log('各分区排行数据', this.zoneRank)
       },
       async getWeekRank (data) {
-        let {data: {rank: {list: res}}} = await axios.get(`${url.zoneRank}&type=${data.type}&content=${data.zoneType}&duration=${data.time}`)
+        let {data: {data: res}} = await axios.get(`${url.zoneRank}&type=${data.type}&content=${data.zoneType}&duration=${data.time}`)
         this.zoneRank[data.zoneType] = res.slice(0, 7)
       },
       solveImgUrl
