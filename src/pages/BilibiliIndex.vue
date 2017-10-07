@@ -16,7 +16,7 @@
       <bilibili-wrap v-for="(item, index) in zoneOrigin" :posX="-141" :posY="zoneIcon[item]"
                      :title="zoneMap[item]" :zoneData="allData[item]"
                      :rankData="zoneRank[item]" :zoneType="item" :key="index"
-                     @change="showChange"
+                     @change="showChange" :ref="'wrap'+item"
                      @itemHover="showItemHover" @itemLeave="showItemLeave">
 
       </bilibili-wrap>
@@ -27,6 +27,9 @@
     <transition name="fade">
       <video-detail v-if="itemHoverData" :itemHoverData="itemHoverData"></video-detail>
     </transition>
+    <bilibili-elevator :zoneOrigin="zoneOrigin" :zoneMap="zoneMap"
+                       :elevatorLeft="elevatorLeft" :elevatorActive="elevatorActive"
+                       @elevatorClick="elevatorClick"></bilibili-elevator>
   </div>
 </template>
 
@@ -37,6 +40,7 @@
   import BilibiliBanner from '@/base/BilibiliBanner'
   import BilibiliRank from '@/components/BilibiliRank'
   import BilibiliWrap from '@/components/BilibiliWrap'
+  import BilibiliElevator from '@/components/BilibiliElevator'
   import VideoDetail from '@/base/VideoDetail'
 
   export default {
@@ -70,7 +74,9 @@
           160: '生活',
           165: '广告',
           168: '国创相关'
-        }
+        },
+        elevatorLeft: 0,
+        elevatorActive: 0
       }
     },
     mounted () {
@@ -81,8 +87,27 @@
       this.getLive()
       this.getAllData()
       this.getZoneRank()
+      this.elevatorLeft = this.$refs.bilibili.getBoundingClientRect().right
+      window.addEventListener('resize', () => {
+        this.elevatorLeft = this.$refs.bilibili.getBoundingClientRect().right
+      })
+      document.addEventListener('scroll', () => {
+        this.zoneOrigin.forEach((item) => {
+          let top = this.$refs['wrap' + item][0].$el.getBoundingClientRect().top
+          if (top < 300 && top > -10) {
+            this.elevatorActive = item
+          }
+        })
+        if (document.documentElement.scrollTop < 840) {
+          this.elevatorActive = 0
+        }
+      })
     },
     methods: {
+      elevatorClick (item) {
+        console.log('当前点击', this.zoneMap[item])
+        this.$refs['wrap' + item][0].$el.scrollIntoView({block: 'start', behavior: 'smooth'})
+      },
       getBilibiliPosition () {
         return this.$refs.bilibili.getBoundingClientRect()
       },
@@ -150,7 +175,8 @@
       BilibiliBanner,
       BilibiliRank,
       BilibiliWrap,
-      VideoDetail
+      VideoDetail,
+      BilibiliElevator
     }
   }
 </script>
@@ -161,7 +187,7 @@
   .fade-enter-active, .fade-leave-active {
     transition: opacity .3s
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+  .fade-enter, .fade-leave-to {
     opacity: 0
   }
   #bilibili {

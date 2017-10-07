@@ -37,7 +37,7 @@
 
   div.videoDetail {
     position: absolute;
-    z-index: 999;
+    z-index: 1000;
     width: 320px;
     height: 152px;
     box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
