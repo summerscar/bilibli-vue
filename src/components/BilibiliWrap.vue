@@ -32,7 +32,7 @@
       <promote-ad v-if="promoteAd" :promoteAd="promoteAd"></promote-ad>
       <!--各分区右侧排行数据-->
       <base-rank :rankData="rankData" v-if="rankData.length"
-                 @typeChange="typeChange" @timeChange="timeChange"
+                 @change="change"
                  @itemHover="itemHover" @itemLeave="itemLeave"></base-rank>
 
     </div>
@@ -123,11 +123,8 @@
       itemHover (obj) {
         this.$emit('itemHover', obj)
       },
-      typeChange (index) {
-        this.$emit('typeChange', {index: index, type: this.zoneType})
-      },
-      timeChange (index) {
-        this.$emit('timeChange', {index: index, type: this.zoneType})
+      change (obj) {
+        this.$emit('change', Object.assign(obj, {zoneType: this.zoneType}))
       }
     }
   }

@@ -3,12 +3,12 @@
     <div class="header">
       <span class="title">排行</span>
       <ul>
-        <li @mouseover="typeChange(0)" :class="{active: index === 0}">全部</li>
-        <li @mouseover="typeChange(1)" :class="{active: index === 1}">原创</li>
+        <li @mouseover="change({type: 0})" :class="{active: index === 0}">全部</li>
+        <li @mouseover="change({type: 1})" :class="{active: index === 1}">原创</li>
       </ul>
       <div class="switch">
         <div>{{switchArr[switchIndex]}} <span class="downIcon"></span></div>
-        <div class="optional" @click="timeChange">{{switchArr[switchIndex === 1 ? 0 : 1]}}</div>
+        <div class="optional" @click="change({time: switchIndex === 1 ? 0 : 1})">{{switchArr[switchIndex === 1 ? 0 : 1]}}</div>
       </div>
     </div>
 
@@ -83,13 +83,14 @@
         let posObj = this.getPosition(e.currentTarget)
         this.$emit('itemHover', {data: item, position: posObj})
       },
-      timeChange () {
-        this.switchIndex = this.switchIndex === 1 ? 0 : 1
-        this.$emit('timeChange', this.switchIndex)
-      },
-      typeChange (index) {
-        this.index = index
-        this.$emit('typeChange', this.index)
+      change (data) {
+        this.index = data.type === undefined ? this.index : data.type
+        this.switchIndex = data.time === undefined ? this.switchIndex : data.time
+        let obj = {
+          type: this.index === 0 ? 'all' : 'origin',
+          time: this.switchIndex === 0 ? 3 : 7
+        }
+        this.$emit('change', obj)
       },
       solveImgUrl,
       num2Wan

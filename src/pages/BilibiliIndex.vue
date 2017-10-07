@@ -16,7 +16,7 @@
       <bilibili-wrap v-for="(item, index) in zoneOrigin" :posX="-141" :posY="zoneIcon[item]"
                      :title="zoneMap[item]" :zoneData="allData[item]"
                      :rankData="zoneRank[item]" :zoneType="item" :key="index"
-                     @typeChange="showTypeChange" @timeChange="showTimeChange"
+                     @change="showChange"
                      @itemHover="showItemHover" @itemLeave="showItemLeave">
 
       </bilibili-wrap>
@@ -96,11 +96,10 @@
         obj.position.y = obj.position.y - 420
         this.itemHoverData = obj
       },
-      showTypeChange (data) {
-        console.log('类型切换', data.index, '类别', this.zoneMap[data.type])
-      },
-      showTimeChange (data) {
-        console.log('时间切换', data.index, '类别', this.zoneMap[data.type])
+      showChange (data) {
+        console.log(data)
+        console.log('时间切换', data.time, '类别', data.type, '分区类别', this.zoneMap[data.zoneType])
+        this.getWeekRank(data)
       },
       async getBanner () {
         let {data: {data: res}} = await axios.get(url.banner)
@@ -141,6 +140,10 @@
         this.zoneRank = tmpObj
         console.log('各分区排行数据', this.zoneRank)
       },
+      async getWeekRank (data) {
+        let {data: {rank: {list: res}}} = await axios.get(`${url.zoneRank}&type=${data.type}&content=${data.zoneType}&duration=${data.time}`)
+        this.zoneRank[data.zoneType] = res.slice(0, 7)
+      },
       solveImgUrl
     },
     components: {
@@ -156,10 +159,10 @@
   @import "../common/style/variable";
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
+    transition: opacity .3s
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-    opacity: 0.5
+    opacity: 0
   }
   #bilibili {
     max-width: $max-width;
