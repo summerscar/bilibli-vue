@@ -156,6 +156,7 @@
       async showChange (data) {
         console.log('时间切换', data.time, '类别', data.type, '分区类别', this.zoneMap[data.zoneType])
         this.zoneRank[data.zoneType] = await api.getWeekRank(data)
+        this.$forceUpdate()
       }
     },
     components: {
