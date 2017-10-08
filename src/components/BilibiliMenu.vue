@@ -204,7 +204,7 @@
     </div>
     <div class="gif">
       <a href="">
-      <img src="http://localhost:3000/image/menuGif.gif" alt="">
+      <img :src="solveImgUrl('http://i0.hdslb.com/bfs/active/d982254ba12cced5ccc2748be4f88b180de57ed4.gif')" alt="">
       </a>
     </div>
   </div>
@@ -212,7 +212,7 @@
 
 <script>
   import api from '@/common/js/api'
-  import {num2999} from '@/common/js/utils'
+  import {num2999, solveImgUrl} from '@/common/js/utils'
   import MenuSlide from '@/base/MenuSlide'
 
   export default {
@@ -230,6 +230,7 @@
     },
     methods: {
       num2999,
+      solveImgUrl,
       async getMenuData () {
         this.menuData = await api.getMenuData()
       },

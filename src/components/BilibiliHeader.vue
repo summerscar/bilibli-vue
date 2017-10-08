@@ -26,10 +26,10 @@
                   <div class="title">前线动态</div>
                   <ul>
                    <li>
-                     <img src="http://localhost:3000/image/mengzhan1.png">
+                     <img :src="solveImgUrl('https://i0.hdslb.com/bfs/bangumi/b2e080c557bff6870ed7c0ce8508318d86360206.jpg_280x85.jpg')">
                    </li>
                     <li>
-                      <img src="http://localhost:3000/image/mengzhan2.png">
+                      <img :src="solveImgUrl('https://i0.hdslb.com/bfs/bangumi/e6a31c225e6762bfa2a5531887793687c358c82e.jpg_280x85.jpg')">
                     </li>
                   </ul>
                 </header-slide>
@@ -221,6 +221,7 @@
       this.getDefaultWord()
     },
     methods: {
+      solveImgUrl,
       async getDefaultWord () {
         this.defaultWord = await api.getDefaultWord()
       },

@@ -11,18 +11,6 @@ router.get('/image/mengzhan1.png', async (ctx, next) => {
   ctx.body = image
 })
 
-router.get('/image/mengzhan2.png', async (ctx, next) => {
-  let image = await request({url: imageUrl.mengzhan2, encoding: null})
-  ctx.type = 'image/png'
-  ctx.body = image
-})
-
-router.get('/image/menuGif.gif', async (ctx, next) => {
-  let image = await request({url: imageUrl.menuGif, encoding: null})
-  ctx.type = 'image/gif'
-  ctx.body = image
-})
-
 //  处理传来图片
 //  redis缓存处理
 /* router.get(/^\/image\/dynamic(?:\/|$)/, async (ctx, next) => {
