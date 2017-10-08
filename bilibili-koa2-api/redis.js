@@ -16,7 +16,7 @@ client.on('error', function (err) {
 module.exports = {
   set: function (key, value) {
     client.set(key, value, redis.print)
-    client.expire(key, 604800)
+    client.expire(key, 259200)
   },
   client: client
 };

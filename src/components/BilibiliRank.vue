@@ -3,14 +3,13 @@
     <div class="itemWarp" v-for="item in rankData" v-if="rankData.length">
       <rank-item :item="item"></rank-item>
     </div>
-    <div class="arrow-left" @click="dataLeft">{{rankArr[rankIndex % 3]}}</div>
-    <div class="arrow-right" @click="dataRight">{{rankArr[(rankIndex + 1) % 3]}}</div>
+    <div class="arrow-left" @click="dataLeft">{{rankArr[Math.abs((rankIndex - 1) % 3)]}}</div>
+    <div class="arrow-right" @click="dataRight">{{rankArr[Math.abs((rankIndex + 1) % 3)]}}</div>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
-  import {url} from '@/common/js/url'
+  import api from '@/common/js/api'
   import RankItem from '@/base/RankItem'
 
   export default {
@@ -19,7 +18,7 @@
       return {
         rankData: [],
         rankArr: ['昨日', '三日', '一周'],
-        rankIndex: 0
+        rankIndex: 1
       }
     },
     created () {
@@ -28,42 +27,29 @@
     methods: {
       dataLeft () {
         this.rankIndex --
+        if (this.rankIndex === 0) {
+          this.rankIndex = 3
+        }
         this.getData(true)
       },
       dataRight () {
         this.rankIndex ++
-        this.getData()
+        this.getData(true)
       },
-      getData (boolean = false) {
+      async getData (boolean = false) {
         if (boolean) {
           this.rankData = []
         }
-        try {
-          if (this.rankIndex % 3 === 0) {
-            this.getRankDay()
-            console.log('昨日数据', this.rankData)
-          } else if (this.rankIndex % 3 === 1) {
-            this.getRankThree()
-            console.log('三日数据', this.rankData)
-          } else {
-            this.getRankWeek()
-            console.log('一周数据', this.rankData)
-          }
-        } catch (e) {
-          console.log(e)
+        if (Math.abs(this.rankIndex % 3) === 0) {
+          this.rankData = await api.getRankDay()
+          console.log('昨日数据', this.rankData)
+        } else if (Math.abs(this.rankIndex % 3) === 1) {
+          this.rankData = await api.getRankThree()
+          console.log('三日数据', this.rankData)
+        } else {
+          this.rankData = await api.getRankWeek()
+          console.log('一周数据', this.rankData)
         }
-      },
-      async getRankDay () {
-        let {data: {data: res}} = await axios.get(url.rankDay)
-        this.rankData = res
-      },
-      async getRankThree () {
-        let {data: {data: res}} = await axios.get(url.rankThree)
-        this.rankData = res
-      },
-      async getRankWeek () {
-        let {data: {data: res}} = await axios.get(url.rankWeek)
-        this.rankData = res
       }
     },
     components: {

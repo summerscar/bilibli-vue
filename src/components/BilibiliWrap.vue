@@ -2,7 +2,8 @@
   <div class="bilibiliWrap">
     <!--左侧-->
     <div class="wrapLeft">
-      <bilibili-title :posX="posX" :posY="posY" :title="title" :showSwitch="!!zoneData.length"></bilibili-title>
+      <bilibili-title :posX="posX" :posY="posY" :title="title"
+                      :showSwitch="!!zoneData.length" @change="titleChange"></bilibili-title>
       <!--推广-->
       <div class="videoWarp" v-if="promoteData.length">
         <promote-item v-for="(item, index) in promoteData" :key="index" :item="item"></promote-item>
@@ -117,6 +118,9 @@
       BaseRank
     },
     methods: {
+      titleChange (index) {
+        this.$emit('titleChange', {titleChange: index, zoneType: this.zoneType})
+      },
       itemLeave () {
         this.$emit('itemLeave')
       },

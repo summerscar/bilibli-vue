@@ -17,7 +17,8 @@
                      :title="zoneMap[item]" :zoneData="allData[item]"
                      :rankData="zoneRank[item]" :zoneType="item" :key="index"
                      @change="showChange" :ref="'wrap'+item"
-                     @itemHover="showItemHover" @itemLeave="showItemLeave">
+                     @itemHover="showItemHover" @itemLeave="showItemLeave"
+                     @titleChange="titleChange">
 
       </bilibili-wrap>
 
@@ -34,9 +35,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import {url} from '@/common/js/url'
-  import {solveImgUrl} from '@/common/js/utils'
+  import api from '@/common/js/api'
   import BilibiliBanner from '@/base/BilibiliBanner'
   import BilibiliRank from '@/components/BilibiliRank'
   import BilibiliWrap from '@/components/BilibiliWrap'
@@ -76,21 +75,24 @@
           168: '国创相关'
         },
         elevatorLeft: 0,
-        elevatorActive: 0
+        elevatorActive: 0,
+        newDynamicTemp: {}
       }
     },
     mounted () {
+      this.elevatorLeft = this.$refs.bilibili.getBoundingClientRect().right
       this.getBanner()
+      this.getAllData()
+      this.getZoneRank()
       this.getPromote()
       this.getPromoteAd()
       this.getRecommend()
       this.getLive()
-      this.getAllData()
-      this.getZoneRank()
-      this.elevatorLeft = this.$refs.bilibili.getBoundingClientRect().right
+      //  监听调整窗口时的电梯位置
       window.addEventListener('resize', () => {
         this.elevatorLeft = this.$refs.bilibili.getBoundingClientRect().right
       })
+      //  滚动监听
       document.addEventListener('scroll', () => {
         this.zoneOrigin.forEach((item) => {
           let top = this.$refs['wrap' + item][0].$el.getBoundingClientRect().top
@@ -104,6 +106,36 @@
       })
     },
     methods: {
+      async getBanner () {
+        this.banner = await api.getBanner()
+      },
+      async getAllData () {
+        this.allData = await api.getAllData()
+      },
+      getZoneRank () {
+        this.zoneRank = api.getZoneRank(this.zoneOrigin)
+      },
+      async getPromote () {
+        this.promoteData = await api.getPromote()
+      },
+      async getPromoteAd () {
+        this.promoteAd = await api.getPromoteAd()
+      },
+      async getRecommend () {
+        this.recommendData = await api.getRecommend()
+      },
+      async getLive () {
+        this.liveData = await api.getLive()
+      },
+      async titleChange (data) {
+        console.log('视频类别切换', data.titleChange, '分区类别', this.zoneMap[data.zoneType])
+        if (data.titleChange === 1) {
+          this.newDynamicTemp[data.zoneType] = this.allData[data.zoneType]
+          this.allData[data.zoneType] = await api.getNewList(data)
+        } else {
+          this.allData[data.zoneType] = this.newDynamicTemp[data.zoneType]
+        }
+      },
       elevatorClick (item) {
         console.log('当前点击', this.zoneMap[item])
         this.$refs['wrap' + item][0].$el.scrollIntoView({block: 'start', behavior: 'smooth'})
@@ -121,55 +153,10 @@
         obj.position.y = obj.position.y - 420
         this.itemHoverData = obj
       },
-      showChange (data) {
-        console.log(data)
+      async showChange (data) {
         console.log('时间切换', data.time, '类别', data.type, '分区类别', this.zoneMap[data.zoneType])
-        this.getWeekRank(data)
-      },
-      async getBanner () {
-        let {data: {data: res}} = await axios.get(url.banner)
-        this.banner = res
-        console.log('轮播图数据', this.banner)
-      },
-      async getPromote () {
-        let {data: res} = await axios.get(url.promote)
-        this.promoteData = res
-        console.log('推广数据', this.promoteData)
-      },
-      async getPromoteAd () {
-        let {data: {data: [res]}} = await axios.get(url.promoteAd)
-        this.promoteAd = res
-        console.log('推广广告数据', this.promoteAd)
-      },
-      async getRecommend () {
-        let {data: {list: res}} = await axios.get(url.recommend)
-        this.recommendData = res.slice(0, 5)
-        console.log('底部推荐数据', this.recommendData)
-      },
-      async getLive () {
-        let {data: {data: res}} = await axios.get(url.live)
-        this.liveData = res
-        console.log('直播数据', this.liveData)
-      },
-      async getAllData () {
-        let {data: {data: res}} = await axios.get(url.allData)
-        this.allData = res
-        console.log('各分区数据', this.allData)
-      },
-      async getZoneRank () {
-        let tmpObj = {}
-        for (let i = 0; i < this.zoneOrigin.length; i++) {
-          let {data: {data: res}} = await axios.get(url.zoneRank + '&type=all&content=' + this.zoneOrigin[i] + '&duration=3')
-          tmpObj[this.zoneOrigin[i]] = res.splice(0, 7)
-        }
-        this.zoneRank = tmpObj
-        console.log('各分区排行数据', this.zoneRank)
-      },
-      async getWeekRank (data) {
-        let {data: {data: res}} = await axios.get(`${url.zoneRank}&type=${data.type}&content=${data.zoneType}&duration=${data.time}`)
-        this.zoneRank[data.zoneType] = res.slice(0, 7)
-      },
-      solveImgUrl
+        this.zoneRank[data.zoneType] = await api.getWeekRank(data)
+      }
     },
     components: {
       BilibiliBanner,

@@ -40,7 +40,7 @@
             <ul>
               <li class="user" @mouseover="avatarBigger" @mouseleave="avatarSmaller">
                 <div class="detail" ref="userDetail">
-                  <div class="username">BILIBILI</div>
+                  <div class="username"><a href="https://github.com/summerscar/bilibli-vue " target="_blank">bilibli-vue</a></div>
                   <div class="up">
                     <div class="left">
                       <a href="https://account.bilibili.com/site/home" title="硬币" target="_blank">
@@ -86,7 +86,7 @@
                     <a href="">退出</a>
                   </div>
                 </div>
-                <a>
+                <a href="https://github.com/summerscar/bilibli-vue " target="_blank">
                   <div class="avatar"ref="avatar"></div>
                 </a>
               </li>
@@ -165,11 +165,21 @@
                 <a class="userControl" href="" title="投稿">投 稿</a>
                 <div class="tougaoContainer" ref="tougaoContainer">
                   <ul>
-                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -505px -906px;">专栏投稿</a></li>
-                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -507px -970px;">音频投稿</a></li>
-                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -906px;">视频投稿</a></li>
-                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -970px;">投稿管理</a></li>
-                    <li><a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -1737px;">创作中心</a></li>
+                    <li>
+                      <a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -505px -906px;">专栏投稿</a>
+                    </li>
+                    <li>
+                      <a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -507px -970px;">音频投稿</a>
+                    </li>
+                    <li>
+                      <a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -906px;">视频投稿</a>
+                    </li>
+                    <li>
+                      <a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -970px;">投稿管理</a>
+                    </li>
+                    <li>
+                      <a style="background:url(//static.hdslb.com/images/base/icons.png) no-repeat -442px -1737px;">创作中心</a>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -192,8 +202,7 @@
 <script>
   import {throttle, solveImgUrl} from '@/common/js/utils'
   import HeaderSlide from '@/base/HeaderSlide'
-  import axios from 'axios'
-  import {url} from '@/common/js/url'
+  import api from '@/common/js/api'
 
   export default {
     name: '',
@@ -213,11 +222,10 @@
     },
     methods: {
       async getDefaultWord () {
-        let {data: res} = await axios.get(url.defaultWord)
-        this.defaultWord = res[0]
+        this.defaultWord = await api.getDefaultWord()
       },
       async getHeaderData () {
-        let {data: {data: [res]}} = await axios.get(url.header)
+        let res = await api.getHeaderData()
         res.pic = solveImgUrl(res.pic)
         res.litpic = solveImgUrl(res.litpic)
         this.headerData = res
@@ -936,7 +944,7 @@
           span.title {
             display: inline-block;
             font-size: 12px;
-            line-height: 30px;
+            line-height: 32px;
             padding-left: 26px;
             padding-right: 5px;
             color: $BpinkText;

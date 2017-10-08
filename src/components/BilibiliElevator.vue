@@ -10,8 +10,9 @@
           <div class="tips-img"></div>
         </div>
       </transition>
-      <div class="list" :class="{active: elevatorActive === item}" v-for="(item, index) in zoneOrigin"
-           :key="index" @click="itemClick(item)">
+      <div class="list" :class="{active: elevatorActive === item && !showMask,moveItem: showMask}"
+           v-for="(item, index) in zoneSort" :style="{order: index}"
+           :key="index" @click="itemClick(item)" @mousedown="itemMouseDown($event, index)">
         {{zoneMap[item]|smaller}}
       </div>
       <div class="sort list"  @click="showMask = !showMask">
@@ -55,6 +56,11 @@
         showMask: false
       }
     },
+    computed: {
+      zoneSort () {
+        return this.zoneOrigin
+      }
+    },
     filters: {
       smaller (str) {
         return str.length > 3 ? str.slice(0, 2) : str
@@ -70,10 +76,34 @@
       })
     },
     methods: {
+      itemMouseDown (e, index) {
+        let bol = true
+        let that = this
+        if (bol) return
+        console.log(e.currentTarget)
+        let item = e.currentTarget
+        let disY = e.clientY
+        console.log(disY, '鼠标位置', e.clientY)
+        document.onmousemove = function (e) {
+          console.log('move', 'index', index)
+          item.style.top = (e.clientY - disY) + 'px'
+          if ((e.clientY - disY) > 32) {
+            let temp = that.zoneSort[index]
+            that.zoneSort.splice(index, 1)
+            that.zoneSort.splice(index + 1, 0, temp)
+            console.log(that.zoneSort)
+          }
+        }
+        document.onmouseup = function () {
+          document.onmousedown = null
+          document.onmousemove = null
+        }
+      },
       scrollTop () {
         document.body.scrollIntoView({block: 'start', behavior: 'smooth'})
       },
       itemClick (item) {
+        if (this.showMask) return
         this.$emit('elevatorClick', item)
       }
     }
@@ -82,6 +112,7 @@
 
 <style lang="scss" scoped>
   @import "../common/style/variable";
+
   .fade-enter-active, .fade-leave-active {
     transition: opacity .3s
   }
@@ -95,6 +126,11 @@
   }
   .rightToLeft-enter, .rightToLeft-leave-to {
     transform: scale(0, 1)
+  }
+  .moveItem {
+    cursor: ns-resize!important;
+    user-select: none!important;
+    transition: all 0s!important;
   }
   .active {
     background-color: #00a1d6!important;
@@ -160,6 +196,7 @@
       div.sort {
         height: 50px;
         border-radius: 0 0 4px 4px;
+        order:999;
         span.icon {
           display: block;
           margin: 5px auto 0;

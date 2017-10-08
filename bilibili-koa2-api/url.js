@@ -45,4 +45,7 @@ const topRank = {
 // 各分区右侧排行
 const baseRank = 'https://api.bilibili.com/x/web-interface/ranking/region'
 
-module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine, baseRank, topRank}
+//  各分区最新投稿
+const newList = 'https://api.bilibili.com/x/web-interface/newlist?jsonp=jsonp&rid='
+
+module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine, baseRank, topRank, newList}

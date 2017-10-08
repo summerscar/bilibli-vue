@@ -14,5 +14,6 @@ export const url = {
   zoneRank: host + 'baseRank?get=rank',
   rankDay: host + 'topRank?time=1',
   rankThree: host + 'topRank?time=3',
-  rankWeek: host + 'topRank?time=7'
+  rankWeek: host + 'topRank?time=7',
+  newList: host + 'newList?content='
 }

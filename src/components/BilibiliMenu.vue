@@ -211,10 +211,9 @@
 </template>
 
 <script>
-  import {url} from '@/common/js/url'
+  import api from '@/common/js/api'
   import {num2999} from '@/common/js/utils'
   import MenuSlide from '@/base/MenuSlide'
-  import axios from 'axios'
 
   export default {
     name: '',
@@ -232,9 +231,7 @@
     methods: {
       num2999,
       async getMenuData () {
-        let {data: {data: {region_count: res}}} = await axios.get(url.menuData)
-        this.menuData = res
-        console.log('菜单数据', this.menuData)
+        this.menuData = await api.getMenuData()
       },
       showdonghua () {
         this.$refs.donghua.show()

@@ -24,8 +24,8 @@ router.get('/image/menuGif.gif', async (ctx, next) => {
 })
 
 //  处理传来图片
-
-router.get(/^\/image\/dynamic(?:\/|$)/, async (ctx, next) => {
+//  redis缓存处理
+/* router.get(/^\/image\/dynamic(?:\/|$)/, async (ctx, next) => {
   let url = ctx.url.split('/').slice(3).join('/')
   let cache = await redis.client.getAsync(url)
   if (!cache) {
@@ -39,5 +39,10 @@ router.get(/^\/image\/dynamic(?:\/|$)/, async (ctx, next) => {
     ctx.body = new Buffer(cache, 'base64')
   }
 })
-
+ */
+router.get(/^\/image\/dynamic(?:\/|$)/, async (ctx, next) => {
+  let image = await request({url: imageUrl.imgPrefix + ctx.url.split('/').slice(3).join('/'), encoding: null})
+  ctx.type = 'image/png'
+  ctx.body = image
+})
 module.exports = router
