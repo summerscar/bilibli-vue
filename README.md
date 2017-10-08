@@ -8,6 +8,11 @@
 
 ## TODO
 
-- [ ] 一周时间先写个首页出来
-- [ ] 完成视频的播放页
-- [ ] 完成个人空间页面
+* 右侧电梯排序
+* 动漫时间线
+
+## 使用
+
+* 根目录npm install
+* npm run start/dev 开启前端服务
+* 进入bilibili-api-koa    npm start/dev 开启后台
