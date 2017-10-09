@@ -13,18 +13,14 @@
   export default {
     name: '',
     methods: {
-      show () {
-        throttle(() => {
-          this.$refs.headerSlide.style.visibility = 'visible'
-          this.$refs.headerSlide.style.opacity = 1
-        }, 300)
-      },
-      hide () {
-        throttle(() => {
-          this.$refs.headerSlide.style.visibility = 'hidden'
-          this.$refs.headerSlide.style.opacity = 0
-        }, 300)
-      }
+      show: throttle(function () {
+        this.$refs.headerSlide.style.visibility = 'visible'
+        this.$refs.headerSlide.style.opacity = 1
+      }, 300),
+      hide: throttle(function () {
+        this.$refs.headerSlide.style.visibility = 'hidden'
+        this.$refs.headerSlide.style.opacity = 0
+      }, 300)
     }
   }
 </script>

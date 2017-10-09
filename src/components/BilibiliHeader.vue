@@ -239,64 +239,44 @@
         if (!this.headerData.name) return
         this.$refs.headerTitle.style.opacity = 0
       },
-      avatarBigger () {
-        throttle(() => {
-          this.$refs.avatar.style.transform = 'scale(1.7)'
-          this.$refs.avatar.style.border = '1px solid white'
-          this.$refs.userDetail.style.transform = 'scale(1,1)'
-        }, 300)
-      },
-      avatarSmaller () {
-        throttle(() => {
-          this.$refs.avatar.style.transform = 'scale(1)'
-          this.$refs.avatar.style.border = '0'
-          this.$refs.userDetail.style.transform = 'scale(1,0)'
-        }, 300)
-      },
-      showQR () {
-        throttle(() => {
-          this.$refs.mobileQR.style.display = 'block'
-        }, 300)
-      },
-      hideQR () {
-        throttle(() => {
-          this.$refs.mobileQR.style.display = 'none'
-        }, 300)
-      },
-      showMsgContainer () {
-        throttle(() => {
-          this.$refs.msgContainer.style.visibility = 'visible'
-          this.$refs.msgContainer.style.opacity = 1
-        }, 300)
-      },
-      hideMsgContainer () {
-        throttle(() => {
-          this.$refs.msgContainer.style.visibility = 'hidden'
-          this.$refs.msgContainer.style.opacity = 0
-        }, 300)
-      },
-      showtougao () {
-        throttle(() => {
-          this.$refs.tougaoContainer.style.display = 'block'
-        }, 100)
-      },
-      hidetougao () {
-        throttle(() => {
-          this.$refs.tougaoContainer.style.display = 'none'
-        }, 100)
-      },
-      showCondition () {
-        throttle(() => {
-          this.$refs.condition.style.visibility = 'visible'
-          this.$refs.condition.style.opacity = 1
-        }, 300)
-      },
-      hideCondition () {
-        throttle(() => {
-          this.$refs.condition.style.visibility = 'hidden'
-          this.$refs.condition.style.opacity = 0
-        }, 300)
-      },
+      avatarBigger: throttle(function () {
+        this.$refs.avatar.style.transform = 'scale(1.7)'
+        this.$refs.avatar.style.border = '1px solid white'
+        this.$refs.userDetail.style.transform = 'scale(1,1)'
+      }, 300),
+      avatarSmaller: throttle(function () {
+        this.$refs.avatar.style.transform = 'scale(1)'
+        this.$refs.avatar.style.border = '0'
+        this.$refs.userDetail.style.transform = 'scale(1,0)'
+      }, 300),
+      showQR: throttle(function () {
+        this.$refs.mobileQR.style.display = 'block'
+      }, 300),
+      hideQR: throttle(function () {
+        this.$refs.mobileQR.style.display = 'none'
+      }, 300),
+      showMsgContainer: throttle(function () {
+        this.$refs.msgContainer.style.visibility = 'visible'
+        this.$refs.msgContainer.style.opacity = 1
+      }, 300),
+      hideMsgContainer: throttle(function () {
+        this.$refs.msgContainer.style.visibility = 'hidden'
+        this.$refs.msgContainer.style.opacity = 0
+      }, 300),
+      showtougao: throttle(function () {
+        this.$refs.tougaoContainer.style.display = 'block'
+      }, 100),
+      hidetougao: throttle(function () {
+        this.$refs.tougaoContainer.style.display = 'none'
+      }, 100),
+      showCondition: throttle(function () {
+        this.$refs.condition.style.visibility = 'visible'
+        this.$refs.condition.style.opacity = 1
+      }, 300),
+      hideCondition: throttle(function () {
+        this.$refs.condition.style.visibility = 'hidden'
+        this.$refs.condition.style.opacity = 0
+      }, 300),
       showLookLater () {
         this.$refs.lookLater.show()
       },
@@ -315,18 +295,14 @@
       hideHistory () {
         this.$refs.history.hide()
       },
-      showMengzhan () {
-        throttle(() => {
-          this.$refs.mengzhan.$el.style.visibility = 'visible'
-          this.$refs.mengzhan.$el.style.opacity = 1
-        }, 300)
-      },
-      hideMengzhan () {
-        throttle(() => {
-          this.$refs.mengzhan.$el.style.visibility = 'hidden'
-          this.$refs.mengzhan.$el.style.opacity = 0
-        }, 300)
-      }
+      showMengzhan: throttle(function () {
+        this.$refs.mengzhan.$el.style.visibility = 'visible'
+        this.$refs.mengzhan.$el.style.opacity = 1
+      }, 300),
+      hideMengzhan: throttle(function () {
+        this.$refs.mengzhan.$el.style.visibility = 'hidden'
+        this.$refs.mengzhan.$el.style.opacity = 0
+      }, 300)
     }
   }
 </script>

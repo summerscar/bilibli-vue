@@ -1,16 +1,16 @@
 import {url} from '@/common/js/url'
 
 //  节流函数
-const throttle = (fn, delay = 500) => {
-  let timer = null
-  return (function () {
+const throttle = (func, delay) => {
+  let timer
+  return function () {
     if (timer) {
       clearTimeout(timer)
     }
-    timer = setTimeout(function () {
-      fn()
+    timer = setTimeout(() => {
+      func.apply(this)
     }, delay)
-  })()
+  }
 }
 
 //  处理图片地址至后台
