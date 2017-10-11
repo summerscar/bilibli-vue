@@ -15,5 +15,6 @@ export const url = {
   rankDay: host + 'topRank?time=1',
   rankThree: host + 'topRank?time=3',
   rankWeek: host + 'topRank?time=7',
-  newList: host + 'newList?content='
+  newList: host + 'newList?content=',
+  comment: host + 'comment'
 }

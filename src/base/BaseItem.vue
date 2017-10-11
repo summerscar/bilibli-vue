@@ -1,8 +1,11 @@
 <template>
   <div class="baseItem" v-if="item">
-    <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank">
+    <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank"
+       @mouseover="getDanmu" @mouseleave="danmuStop">
       <img v-lazy="solveImgUrl(item.pic)" width="160" height="100">
       <div class="mask">
+        <p class="danmu" v-for="(item, index) in danmu" :key="index"
+           :style="{top: ((index%2 * 18)+10) + 'px'}" :class="{danmuStop: index <= danmuIndex}">{{item}}</p>
         <div class="detail">
           <div class="play">{{sec2Time(item.duration)}}</div>
         </div>
@@ -19,7 +22,8 @@
 </template>
 
 <script>
-  import {sec2Time, solveImgUrl, num2Wan} from '@/common/js/utils'
+  import {sec2Time, solveImgUrl, num2Wan, throttle} from '@/common/js/utils'
+  import api from '@/common/js/api'
 
   export default {
     name: '',
@@ -31,9 +35,33 @@
     },
     data () {
       return {
+        danmu: [],
+        danmuIndex: -1,
+        timer: null
       }
     },
     methods: {
+      getDanmu: throttle(async function () {
+        if (this.danmu.length === 0) {
+          this.danmu = await api.getComment(this.item.aid)
+          console.log('弹幕数据', this.danmu)
+        }
+        if (this.timer) return
+        this.timer = setInterval(() => {
+          this.danmuIndex += 1
+          if (this.danmuIndex > this.danmu.length - 1) {
+            this.danmuIndex = -1
+            clearInterval(this.timer)
+          }
+        }, 2000)
+      }, 300),
+      danmuStop () {
+        if (this.timer) {
+          clearInterval(this.timer)
+          this.timer = null
+          console.log('清除定时器', this.timer)
+        }
+      },
       sec2Time,
       solveImgUrl,
       num2Wan
@@ -43,7 +71,10 @@
 
 <style lang="scss" scoped>
   @import "../common/style/variable";
-
+  .danmuStop {
+    left: -100%!important;
+    transition: all 6s;
+  }
   div.baseItem {
     width: 160px;
     height: 148px;
@@ -67,6 +98,18 @@
         border-radius: 5px;
         opacity: 0;
         transition: all 0.4s;
+        overflow: hidden;
+        p {
+          position: absolute;
+          left: 100%;
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 12px;
+          color: white;
+          transition-timing-function: linear;
+        }
         div.detail {
           position: absolute;
           bottom: 0;

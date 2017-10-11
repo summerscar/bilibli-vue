@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const request = require('request-promise')
 const {imageUrl} = require('../url')
-const redis = require('../redis')
+/* const redis = require('../redis') */
 
 //  router.prefix('/image')
 

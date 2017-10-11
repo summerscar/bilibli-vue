@@ -80,5 +80,9 @@ export default {
   async getHeaderData () {
     let {data: {data: [res]}} = await axios.get(url.header)
     return res
+  },
+  async getComment (aid) {
+    let {data: res} = await axios.get(url.comment + '?aid=' + aid)
+    return res
   }
 }

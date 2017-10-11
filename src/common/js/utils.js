@@ -1,7 +1,7 @@
 import {url} from '@/common/js/url'
 
 //  节流函数
-const throttle = (func, delay) => {
+const throttle = (func, delay = 500) => {
   let timer
   return function () {
     if (timer) {

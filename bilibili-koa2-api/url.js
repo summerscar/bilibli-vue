@@ -45,4 +45,7 @@ const baseRank = 'https://api.bilibili.com/x/web-interface/ranking/region'
 //  各分区最新投稿
 const newList = 'https://api.bilibili.com/x/web-interface/newlist?jsonp=jsonp&rid='
 
-module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine, baseRank, topRank, newList}
+//  获取弹幕
+const comment = 'https://www.bilibili.com/widget/ajaxGetComment'
+
+module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine, baseRank, topRank, newList, comment}
