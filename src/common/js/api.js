@@ -84,5 +84,9 @@ export default {
   async getComment (aid) {
     let {data: res} = await axios.get(url.comment + '?aid=' + aid)
     return res
+  },
+  async getPreView (aid) {
+    let {data: {data: res}} = await axios.get(url.getPreView + '?aid=' + aid)
+    return res
   }
 }

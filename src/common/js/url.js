@@ -2,6 +2,7 @@ const host = 'http://localhost:3000/'
 
 export const url = {
   getImg: host + 'image/dynamic/',
+  getPreImg: host + 'image/preView/',
   banner: host + 'banner',
   header: host + 'header',
   defaultWord: host + 'defaultWord',
@@ -16,5 +17,6 @@ export const url = {
   rankThree: host + 'topRank?time=3',
   rankWeek: host + 'topRank?time=7',
   newList: host + 'newList?content=',
-  comment: host + 'comment'
+  comment: host + 'comment',
+  getPreView: host + 'getPreView'
 }

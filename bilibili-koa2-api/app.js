@@ -23,6 +23,7 @@ const baseRank = require('./routes/baseRank')
 const topRank = require('./routes/topRank')
 const newList = require('./routes/newList')
 const comment = require('./routes/comment')
+const getPreView = require('./routes/getPreView')
 
 // error handler
 onerror(app)
@@ -66,5 +67,6 @@ app.use(baseRank.routes(), baseRank.allowedMethods())
 app.use(topRank.routes(), topRank.allowedMethods())
 app.use(newList.routes(), newList.allowedMethods())
 app.use(comment.routes(), comment.allowedMethods())
+app.use(getPreView.routes(), getPreView.allowedMethods())
 
 module.exports = app

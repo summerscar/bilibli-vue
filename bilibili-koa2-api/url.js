@@ -1,5 +1,6 @@
 const imageUrl = {
   imgPrefix: 'http://i0.hdslb.com/bfs/',
+  imgPrefixPre: 'http://i3.hdslb.com/bfs/',
   header: 'https://api.bilibili.com/x/web-show/res/loc?pf=0&id=142&jsonp=jsonp&_=1507086094917'
 }
 
@@ -48,4 +49,6 @@ const newList = 'https://api.bilibili.com/x/web-interface/newlist?jsonp=jsonp&ri
 //  获取弹幕
 const comment = 'https://www.bilibili.com/widget/ajaxGetComment'
 
-module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine, baseRank, topRank, newList, comment}
+const getPreView = 'https://api.bilibili.com/pvideo?type=jsonp'
+
+module.exports = {imageUrl, banner, defaultWord, promote, menuData, recommend, AllData, live, timeLine, baseRank, topRank, newList, comment, getPreView}

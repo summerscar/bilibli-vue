@@ -3,7 +3,12 @@
     <a :href="'https://www.bilibili.com/video/av'+ item.aid +'/'" target="_blank"
        @mouseover="getDanmu" @mouseleave="danmuStop">
       <img v-lazy="solveImgUrl(item.pic)" width="160" height="100">
-      <div class="mask">
+      <div class="mask" @mousemove="getPreView">
+        <div class="preview" v-if="preViewData" :style="{backgroundPosition:pos[1]+'px '+pos[0]+'px'}"
+             v-lazy:background-image="solvePreImgUrl(preViewData.image[0])"></div>
+        <div class="processBarWrap">
+          <div class="processBar" :style="{width: barPercent*0.9*100 + '%'}"></div>
+        </div>
         <p class="danmu" v-for="(item, index) in danmu" :key="index"
            :style="{top: ((index%2 * 18)+10) + 'px'}" :class="{danmuStop: index <= danmuIndex}">{{item}}</p>
         <div class="detail">
@@ -22,7 +27,7 @@
 </template>
 
 <script>
-  import {sec2Time, solveImgUrl, num2Wan, throttle} from '@/common/js/utils'
+  import {sec2Time, solveImgUrl, num2Wan, throttle, solvePreImgUrl} from '@/common/js/utils'
   import api from '@/common/js/api'
 
   export default {
@@ -37,10 +42,31 @@
       return {
         danmu: [],
         danmuIndex: -1,
-        timer: null
+        timer: null,
+        preViewData: null,
+        barPercent: 0
+      }
+    },
+    computed: {
+      pos () {
+        if (!this.preViewData) {
+          return 0
+        }
+        let index = this.preViewData.index.length * this.barPercent | 0
+        let res = [((index / 10) | 0) * 90 * -1, index % 10 * 160 * -1]
+        console.log(`位置第${((index / 10) | 0)}行，第${index % 10}个`)
+        return res
       }
     },
     methods: {
+      async getPreView (e) {
+        this.barPercent = (e.clientX - e.currentTarget.getBoundingClientRect().left) / 160
+        console.log('百分比', this.barPercent)
+        if (!this.preViewData) {
+          this.preViewData = await api.getPreView(this.item.aid)
+          console.log('视频预览数据', this.preViewData)
+        }
+      },
       getDanmu: throttle(async function () {
         if (this.danmu.length === 0) {
           this.danmu = await api.getComment(this.item.aid)
@@ -64,7 +90,8 @@
       },
       sec2Time,
       solveImgUrl,
-      num2Wan
+      num2Wan,
+      solvePreImgUrl
     }
   }
 </script>
@@ -99,6 +126,33 @@
         opacity: 0;
         transition: all 0.4s;
         overflow: hidden;
+        div.preview {
+          position: absolute;
+          left: 0;
+          top: 10px;
+          width: 100%;
+          height: 90px;
+          background-color: white;
+          background-size: 1600px;
+        }
+        div.processBarWrap {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 10px;
+          background-color: black;
+          div.processBar {
+            position: absolute;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 2px;
+            border-radius: 1px;
+            background-color: #cfcfcf;
+          }
+        }
         p {
           position: absolute;
           left: 100%;

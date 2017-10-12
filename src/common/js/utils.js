@@ -17,6 +17,9 @@ const throttle = (func, delay = 500) => {
 const solveImgUrl = (imgUrl) => {
   return url.getImg + imgUrl.split('/').slice(4).join('/')
 }
+const solvePreImgUrl = (imgUrl) => {
+  return url.getPreImg + imgUrl.split('/').slice(4).join('/')
+}
 //  生成随机数
 const rdNum = (n, m) => {
   const c = m - n + 1
@@ -44,5 +47,5 @@ const num2999 = (num) => {
   return num > 999 ? '999+' : num
 }
 
-export {throttle, solveImgUrl, rdNum, sec2Time, num2Wan, num2999}
+export {throttle, solveImgUrl, rdNum, sec2Time, num2Wan, num2999, solvePreImgUrl}
 
